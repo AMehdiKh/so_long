@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/01 01:47:59 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:02:27 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,41 +42,6 @@ int	ft_perror_map(void)
 	}
 }
 
-void	ft_free_exit(char *ptr1, char *ptr2)
-{
-	if (ptr1)
-		free(ptr1);
-	if (ptr2)
-		free(ptr2);
-	exit(EXIT_FAILURE);
-}
-
-void	*ft_free_return(char *ptr1, char *ptr2)
-{
-	if (ptr1)
-		free(ptr1);
-	if (ptr2)
-		free(ptr2);
-	return (NULL);
-}
-
-char	*ft_strjoin_long(char *s1, char *s2)
-{
-	char	*map_line;
-	int		slen;
-
-	slen = ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1;
-	if (!s2)
-		return (s1);
-	map_line = malloc(slen);
-	if (!map_line)
-		ft_free_exit(s1, s2);
-	ft_strlcpy(map_line, s1, ft_strlen(s1) + 1);
-	ft_strlcat(map_line, s2, slen);
-	ft_free_return(s1, s2);
-	return (map_line);
-}
-
 char	**ft_coords(int map_fd)
 {
 	char	*map_line;
@@ -95,25 +60,6 @@ char	**ft_coords(int map_fd)
 	}
 }
 
-void	ft_print_err(char **map)
-{
-	ft_putendl_fd("\033[0;31mError : Map is not valid", 2);
-	ft_clear(map);
-}
-
-void	ft_clear(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr[i])
-		++i;
-	while (i--)
-		free(ptr[i]);
-	free(ptr);
-	exit(EXIT_FAILURE);
-}
-
 void	map_parse(char **map, t_data *map_data)
 {
 	int	i;
@@ -122,25 +68,20 @@ void	map_parse(char **map, t_data *map_data)
 	i = 0;
 	while (map[i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (!ft_strchr_gnl("10PCE", map[i][j]))
 				ft_print_err(map);
 			if (i == 0 || !(map[i + 1]) || j == 0 || !(map[i][j + 1]))
 				if (map[i][j] != '1')
 					ft_print_err(map);
-			if (map[i][j] == '1')
-				++map_data->wall;
-			else if (map[i][j] == '0')
-				++map_data->space;
-			else if (map[i][j] == 'P')
+			if (map[i][j] == 'P')
 				++map_data->player;
 			else if (map[i][j] == 'C')
 				++map_data->coin;
 			else if (map[i][j] == 'E')
 				++map_data->exit;
-			++j;
 		}
 		if (map[++i])
 			if (j != (int)ft_strlen(map[i]))

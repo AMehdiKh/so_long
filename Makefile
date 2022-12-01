@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = so_long.c
+SRCS = so_long.c outils.c
 
 OBJS = ${SRCS:.c=.o}
 
