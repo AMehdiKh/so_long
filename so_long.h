@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/07 03:38:22 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/07 07:54:37 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
-
-typedef struct s_mlx
-{
-	void	*ptr;
-	void	*win;
-	void	*img;
-}	t_mlx;
 
 typedef struct s_data
 {
@@ -59,34 +52,27 @@ typedef struct s_queue
 	int		size;
 }	t_queue;
 
-void	ft_perror_map(char *str);
-
-char	*ft_strjoin_long(char *s1, char *s2);
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win;
+	void	*img;
+}	t_mlx;
 
 char	**ft_coords(char *map_name);
-
-void	*ft_free_return(char *ptr1, char *ptr2);
-
-void	ft_free_exit(char *ptr1, char *ptr2);
-
-void	ft_print_err(char **map);
-
-void	*ft_clear(char **ptr);
-
+char	*ft_strjoin_long(char *s1, char *s2);
+void	*ft_free_return(void *ptr1, void *ptr2);
 void	map_check(char **map, t_data *map_data);
+void	ft_count_items(t_data *map_data, char item);
 
+bool	**ft_visited(char **map, t_data *map_data);
+t_node	*ft_newnode(int x, int y);
+void	ft_enqueue(t_queue *queue, bool **visited, int x, int y);
+void	ft_dequeue(t_queue *queue);
+void	ft_isvalid(t_queue *queue, bool **visited, char **map);
 void	ft_bfs(char	**map, t_data *map_data);
 
-bool	**ft_visited(char	**map, t_data *map_data);
-
-t_node	*ft_newnode(int x, int y);
-
-void	ft_enqueue(t_queue *queue, bool **visited, int x, int y);
-
-void	ft_dequeue(t_queue *queue);
-
-void	ft_isvalid(t_queue *queue, bool **visited, char **map);
-
-void	ft_count_items(t_data *map_data, char item);
+void	ft_print_err(char **map, char *str);
+void	ft_clear(void **ptr);
 
 #endif

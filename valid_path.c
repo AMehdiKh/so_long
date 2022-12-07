@@ -6,36 +6,11 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/07 03:34:06 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/07 07:58:15 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-bool	**ft_visited(char	**map, t_data *map_data)
-{
-	bool	**visited;
-	int		i;
-
-	i = 0;
-	visited = ft_calloc((map_data->i - 2) * (map_data->j - 2),
-			sizeof(bool *));
-	if (!visited)
-		ft_print_err(map);
-	while (i < (map_data->i - 2) * (map_data->j - 2))
-	{
-		visited[i] = ft_calloc(1, sizeof(bool));
-		if (!visited[i])
-		{
-			while (i--)
-				free(visited[i]);
-			free(visited);
-			ft_print_err(map);
-		}
-		++i;
-	}
-	return (visited);
-}
 
 t_node	*ft_newnode(int x, int y)
 {
@@ -43,7 +18,7 @@ t_node	*ft_newnode(int x, int y)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		return (NULL);
+		ft_print_err(NULL, NULL);
 	node->x = x;
 	node->y = y;
 	node->next = NULL;
@@ -112,6 +87,8 @@ void	ft_bfs(char	**map, t_data *map_data)
 			++valid_coins;
 		ft_dequeue(queue);
 	}
+	ft_clear((void **)visited);
 	if (valid_coins != map_data->coin || !valid_exit)
-		ft_print_err(map);
+		ft_print_err(map, "\033[0;31mError: the player in the map has"
+			" invalid path, either to the exit or the collectibles or both");
 }

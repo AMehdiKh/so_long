@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/07 03:17:07 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/07 07:45:30 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	ft_perror_map(char *str)
-{
-	if (errno)
-		perror("\033[0;31mError ");
-	else
-		ft_putendl_fd(str, 2);
-	ft_printf("\033[0;32mIt must seem like : ./so_long map_name.der\n");
-	exit(EXIT_FAILURE);
-}
 
 char	**ft_coords(char *map_name)
 {
@@ -34,16 +24,18 @@ char	**ft_coords(char *map_name)
 	fd = open(file_path, O_RDONLY);
 	free(file_path);
 	if (fd < 0)
-		ft_perror_map(NULL);
+		ft_print_err(NULL, NULL);
 	one_line = ft_calloc(4096, 1);
 	map_line = ft_calloc(1, 1);
 	if (!one_line || !map_line)
-		ft_perror_map(NULL);
+		ft_print_err(NULL, NULL);
 	while (read(fd, one_line, 4096))
 		map_line = ft_strjoin_long(map_line, one_line);
 	close(fd);
 	map = ft_split(map_line, '\n');
 	ft_free_return(map_line, one_line);
+	if (!map || !*map)
+		ft_print_err(map, "\033[0;31mError: map is empty");
 	return (map);
 }
 
@@ -69,33 +61,45 @@ void	map_check(char **map, t_data *map_data)
 		while (map[map_data->i][++map_data->j])
 		{
 			if (!ft_strchr("10PCE", map[map_data->i][map_data->j]))
-				ft_print_err(map);
+				ft_print_err(map,
+					"\033[0;31mError: map composed with invalid characters");
 			if (map_data->i == 0 || !(map[map_data->i + 1]) || map_data->j == 0
 				|| !(map[map_data->i][map_data->j + 1]))
 				if (map[map_data->i][map_data->j] != '1')
-					ft_print_err(map);
+					ft_print_err(map,
+						"\033[0;31mError: The map is not surrounded by walls");
 			ft_count_items(map_data, map[map_data->i][map_data->j]);
 		}
 		if (map[++map_data->i])
 			if (map_data->j != (int)ft_strlen(map[map_data->i]))
-				ft_print_err(map);
+				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
 	}
 	if (map_data->player != 1 || map_data->exit != 1 || map_data->coin < 1)
-		ft_print_err(map);
+		ft_print_err(map, "\033[0;31mError: either the map contains a duplicates"
+			" items (P / E) or contains less than one (C) item");
 }
 
-int	main(int ac, char **av)
+bool	**ft_visited(char	**map, t_data *map_data)
 {
-	t_data	map_data[1];
-	char	**map;
+	bool	**visited;
+	int		i;
 
-	errno = 0;
-	if (ac != 2 || (ft_strlen(av[1]) <= 4)
-		|| ft_strncmp(&av[1][ft_strlen(av[1]) - 4], ".der", 4))
-		ft_perror_map("\033[0;31mError : no map or more than one map");
-	map = ft_coords(av[1]);
-	ft_bzero(map_data, sizeof(t_data));
-	map_check(map, map_data);
-	ft_bfs(map, map_data);
-	return (0);
+	i = 0;
+	visited = ft_calloc((map_data->i - 2) * (map_data->j - 2),
+			sizeof(bool *));
+	if (!visited)
+		ft_print_err(map, NULL);
+	while (i < (map_data->i - 2) * (map_data->j - 2))
+	{
+		visited[i] = ft_calloc(1, sizeof(bool));
+		if (!visited[i])
+		{
+			while (i--)
+				free(visited[i]);
+			free(visited);
+			ft_print_err(map, NULL);
+		}
+		++i;
+	}
+	return (visited);
 }
