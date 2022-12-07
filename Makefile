@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = so_long.c outils.c
+SRCS = so_long.c outils.c valid_path.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -12,7 +12,7 @@ OBJS = ${SRCS:.c=.o}
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) libft.a libftprintf.a libgnl.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJS) libft.a libftprintf.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -Imlx -c $<
