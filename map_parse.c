@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/07 07:45:30 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:58:28 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	ft_count_items(t_data *map_data, char item)
 {
 	if (item == 'P')
 	{
-		map_data->p_pos[0] = map_data->j;
-		map_data->p_pos[1] = map_data->i;
+		map_data->p_pos[0] = map_data->y;
+		map_data->p_pos[1] = map_data->x;
 		++map_data->player;
 	}
 	else if (item == 'C')
@@ -55,23 +55,23 @@ void	ft_count_items(t_data *map_data, char item)
 
 void	map_check(char **map, t_data *map_data)
 {
-	while (map[map_data->i])
+	while (map[map_data->y])
 	{
-		map_data->j = -1;
-		while (map[map_data->i][++map_data->j])
+		map_data->x = -1;
+		while (map[map_data->y][++map_data->x])
 		{
-			if (!ft_strchr("10PCE", map[map_data->i][map_data->j]))
+			if (!ft_strchr("10PCE", map[map_data->y][map_data->x]))
 				ft_print_err(map,
 					"\033[0;31mError: map composed with invalid characters");
-			if (map_data->i == 0 || !(map[map_data->i + 1]) || map_data->j == 0
-				|| !(map[map_data->i][map_data->j + 1]))
-				if (map[map_data->i][map_data->j] != '1')
+			if (map_data->y == 0 || !(map[map_data->y + 1]) || map_data->x == 0
+				|| !(map[map_data->y][map_data->x + 1]))
+				if (map[map_data->y][map_data->x] != '1')
 					ft_print_err(map,
 						"\033[0;31mError: The map is not surrounded by walls");
-			ft_count_items(map_data, map[map_data->i][map_data->j]);
+			ft_count_items(map_data, map[map_data->y][map_data->x]);
 		}
-		if (map[++map_data->i])
-			if (map_data->j != (int)ft_strlen(map[map_data->i]))
+		if (map[++map_data->y])
+			if (map_data->x != (int)ft_strlen(map[map_data->y]))
 				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
 	}
 	if (map_data->player != 1 || map_data->exit != 1 || map_data->coin < 1)
@@ -79,19 +79,18 @@ void	map_check(char **map, t_data *map_data)
 			" items (P / E) or contains less than one (C) item");
 }
 
-bool	**ft_visited(char	**map, t_data *map_data)
+bool	**ft_visited(char **map, t_data *map_data)
 {
 	bool	**visited;
 	int		i;
 
 	i = 0;
-	visited = ft_calloc((map_data->i - 2) * (map_data->j - 2),
-			sizeof(bool *));
+	visited = ft_calloc(map_data->y + 1, sizeof(bool *));
 	if (!visited)
 		ft_print_err(map, NULL);
-	while (i < (map_data->i - 2) * (map_data->j - 2))
+	while (i < map_data->y)
 	{
-		visited[i] = ft_calloc(1, sizeof(bool));
+		visited[i] = ft_calloc(map_data->x, sizeof(bool));
 		if (!visited[i])
 		{
 			while (i--)
