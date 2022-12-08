@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/08 15:29:07 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:53:49 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct s_queue
 {	
 	t_node		*front;
 	t_node		*rear;
-	bool		**visited;
 	int			size;
+	bool		**visited;
 }	t_queue;
 
 typedef struct s_mlx
