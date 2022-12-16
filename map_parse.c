@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/08 14:58:28 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:14:47 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,41 +39,48 @@ char	**ft_coords(char *map_name)
 	return (map);
 }
 
-void	ft_count_items(t_data *map_data, char item)
+void	ft_count_items(t_data *map_data)
 {
-	if (item == 'P')
+	char	**map;
+
+	map = map_data->map;
+	if (!ft_strchr("10PCE", map[map_data->y][map_data->x]))
+		ft_print_err(map,
+			"\033[0;31mError: map composed with invalid characters");
+	if (map_data->y == 0 || !(map[map_data->y + 1]) || map_data->x == 0
+		|| !(map[map_data->y][map_data->x + 1]))
+		if (map[map_data->y][map_data->x] != '1')
+			ft_print_err(map,
+				"\033[0;31mError: The map is not surrounded by walls");
+	if (map[map_data->y][map_data->x] == 'P')
 	{
 		map_data->p_pos[0] = map_data->y;
 		map_data->p_pos[1] = map_data->x;
 		++map_data->player;
 	}
-	else if (item == 'C')
+	else if (map[map_data->y][map_data->x] == 'C')
 		++map_data->coin;
-	else if (item == 'E')
+	else if (map[map_data->y][map_data->x] == 'E')
 		++map_data->exit;
 }
 
-void	map_check(char **map, t_data *map_data)
+void	map_check(t_data *map_data)
 {
+	char	**map;
+
+	map = map_data->map;
 	while (map[map_data->y])
 	{
 		map_data->x = -1;
 		while (map[map_data->y][++map_data->x])
-		{
-			if (!ft_strchr("10PCE", map[map_data->y][map_data->x]))
-				ft_print_err(map,
-					"\033[0;31mError: map composed with invalid characters");
-			if (map_data->y == 0 || !(map[map_data->y + 1]) || map_data->x == 0
-				|| !(map[map_data->y][map_data->x + 1]))
-				if (map[map_data->y][map_data->x] != '1')
-					ft_print_err(map,
-						"\033[0;31mError: The map is not surrounded by walls");
-			ft_count_items(map_data, map[map_data->y][map_data->x]);
-		}
+			ft_count_items(map, map_data);
 		if (map[++map_data->y])
 			if (map_data->x != (int)ft_strlen(map[map_data->y]))
 				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
 	}
+	if (map_data->y * SP_Y > WINDOW_Y || map_data->x * SP_X > WINDOW_X)
+		ft_print_err(map, "\033[0;31mError: map is longer"
+			" than screen resolution");
 	if (map_data->player != 1 || map_data->exit != 1 || map_data->coin < 1)
 		ft_print_err(map, "\033[0;31mError: either the map contains a duplicates"
 			" items (P / E) or contains less than one (C) item");

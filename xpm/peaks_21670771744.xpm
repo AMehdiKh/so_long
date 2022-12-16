@@ -1,0 +1,27 @@
+/* XPM */
+static char *peaks_21670771744[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 5 1 ",
+"  c #25131A",
+". c #362030",
+"X c #3D253B",
+"o c #90919E",
+"O c #ADC1CF",
+/* pixels */
+"XXXXXXXXXXXXXXXX",
+"XXXXXXXXXXXXXXXX",
+"XXXXO XXXXXO XXX",
+"XXXOOo XXXOOo XX",
+"XXXOoo XXXOoo XX",
+"XXXooo XXXooo XX",
+"XXX    XXX    XX",
+"XXXXXXXXX.XXXXXX",
+"XXXXXXXXX.XXXXXX",
+"XXXXO XXX.XO XXX",
+"XXXOOo XX.OOo XX",
+"XXXOoo XX.Ooo XX",
+"XXXooo XXXooo XX",
+"X..    XXX    XX",
+"XXXXXXXXX.XXXXXX",
+"XXXXXXXXX.XXXXXX"
+};
