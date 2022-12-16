@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/16 18:14:47 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:50:35 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	map_check(t_data *map_data)
 	{
 		map_data->x = -1;
 		while (map[map_data->y][++map_data->x])
-			ft_count_items(map, map_data);
+			ft_count_items(map_data);
 		if (map[++map_data->y])
 			if (map_data->x != (int)ft_strlen(map[map_data->y]))
 				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
@@ -86,7 +86,7 @@ void	map_check(t_data *map_data)
 			" items (P / E) or contains less than one (C) item");
 }
 
-bool	**ft_visited(char **map, t_data *map_data)
+bool	**ft_visited(t_data *map_data)
 {
 	bool	**visited;
 	int		i;
@@ -94,7 +94,7 @@ bool	**ft_visited(char **map, t_data *map_data)
 	i = 0;
 	visited = ft_calloc(map_data->y + 1, sizeof(bool *));
 	if (!visited)
-		ft_print_err(map, NULL);
+		ft_print_err(map_data->map, NULL);
 	while (i < map_data->y)
 	{
 		visited[i] = ft_calloc(map_data->x, sizeof(bool));
@@ -103,7 +103,7 @@ bool	**ft_visited(char **map, t_data *map_data)
 			while (i--)
 				free(visited[i]);
 			free(visited);
-			ft_print_err(map, NULL);
+			ft_print_err(map_data->map, NULL);
 		}
 		++i;
 	}

@@ -6,20 +6,22 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/08 16:34:57 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:07:57 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_node	*ft_newnode(int x, int y, bool **visited, char **map)
+t_node	*ft_newnode(int x, int y, t_queue *queue, char **map)
 {
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
 	if (!node)
 	{
-		ft_clear((void **)visited);
+		while (queue->size)
+			ft_dequeue(queue);
+		ft_clear((void **)queue->visited);
 		ft_print_err(map, NULL);
 	}
 	node->x = x;
@@ -32,7 +34,7 @@ void	ft_enqueue(t_queue *queue, char **map, int y, int x)
 {
 	t_node	*node;
 
-	node = ft_newnode(x, y, queue->visited, map);
+	node = ft_newnode(x, y, queue, map);
 	if (!queue->size)
 		queue->front = node;
 	if (queue->rear)
@@ -69,16 +71,18 @@ void	ft_isvalid(t_queue *queue, char **map)
 		ft_enqueue(queue, map, y, x - 1);
 }
 
-void	ft_bfs(char	**map, t_data *map_data)
+void	ft_bfs(t_data *map_data)
 {
 	t_queue	queue[1];
 	int		valid_coins;
 	int		valid_exit;
+	char	**map;
 
 	ft_bzero(queue, sizeof(t_queue));
 	valid_coins = 0;
 	valid_exit = 0;
-	queue->visited = ft_visited(map, map_data);
+	map = map_data->map;
+	queue->visited = ft_visited(map_data);
 	ft_enqueue(queue, map, map_data->p_pos[0], map_data->p_pos[1]);
 	while (queue->size)
 	{

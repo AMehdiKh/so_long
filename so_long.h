@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/16 18:11:13 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/16 22:32:50 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,30 @@ typedef struct s_mlx
 char	**ft_coords(char *map_name);
 char	*ft_strjoin_long(char *s1, char *s2);
 void	*ft_free_return(void *ptr1, void *ptr2);
-void	map_check(char **map, t_data *map_data);
-void	ft_count_items(char **map, t_data *map_data);
+void	map_check(t_data *map_data);
+void	ft_count_items(t_data *map_data);
 
-bool	**ft_visited(char **map, t_data *map_data);
-t_node	*ft_newnode(int x, int y, bool **visited, char **map);
+bool	**ft_visited(t_data *map_data);
+t_node	*ft_newnode(int x, int y, t_queue *queue, char **map);
 void	ft_enqueue(t_queue *queue, char **map, int y, int x);
 void	ft_dequeue(t_queue *queue);
 void	ft_isvalid(t_queue *queue, char **map);
-void	ft_bfs(char	**map, t_data *map_data);
+void	ft_bfs(t_data *map_data);
 
 void	ft_print_err(char **map, char *str);
 void	ft_clear(void **ptr);
 
-void	ft_mlx(char **map, t_mlx *mlx, t_data *map_data);
-void	ft_put_image(char **map, t_mlx *mlx, t_data *map_data);
-void	ft_put_sprite(char pixel, t_mlx *mlx, t_data *map_data, int x, int y);
+void	ft_mlx(t_mlx *mlx, t_data *map_data);
+void	ft_put_image(t_mlx *mlx, t_data *map_data);
+void	ft_put_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+
+void	ft_exit_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+void	ft_space_sprite(t_mlx *mlx, int x, int y);
+void	ft_in_wall_sprite(t_mlx *mlx, int x, int y);
+void	ft_coins_sprite(t_mlx *mlx, int x, int y);
+void	ft_player_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+void	ft_out_wall_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+
+int		ft_close(int keycode, t_mlx *mlx);
 
 #endif
