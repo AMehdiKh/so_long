@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/16 19:50:35 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/17 07:52:57 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,71 +39,75 @@ char	**ft_coords(char *map_name)
 	return (map);
 }
 
-void	ft_count_items(t_data *map_data)
+void	ft_count_items(t_mlx *mlx)
 {
 	char	**map;
 
-	map = map_data->map;
-	if (!ft_strchr("10PCE", map[map_data->y][map_data->x]))
+	map = mlx->map;
+	if (!ft_strchr("10PCE", map[mlx->y][mlx->x]))
 		ft_print_err(map,
 			"\033[0;31mError: map composed with invalid characters");
-	if (map_data->y == 0 || !(map[map_data->y + 1]) || map_data->x == 0
-		|| !(map[map_data->y][map_data->x + 1]))
-		if (map[map_data->y][map_data->x] != '1')
+	if (mlx->y == 0 || !(map[mlx->y + 1]) || mlx->x == 0
+		|| !(map[mlx->y][mlx->x + 1]))
+		if (map[mlx->y][mlx->x] != '1')
 			ft_print_err(map,
 				"\033[0;31mError: The map is not surrounded by walls");
-	if (map[map_data->y][map_data->x] == 'P')
+	if (map[mlx->y][mlx->x] == 'P')
 	{
-		map_data->p_pos[0] = map_data->y;
-		map_data->p_pos[1] = map_data->x;
-		++map_data->player;
+		mlx->p_pos[0] = mlx->y;
+		mlx->p_pos[1] = mlx->x;
+		++mlx->player;
 	}
-	else if (map[map_data->y][map_data->x] == 'C')
-		++map_data->coin;
-	else if (map[map_data->y][map_data->x] == 'E')
-		++map_data->exit;
+	else if (map[mlx->y][mlx->x] == 'E')
+	{
+		mlx->e_pos[0] = mlx->y;
+		mlx->e_pos[1] = mlx->x;
+		++mlx->exit;
+	}
+	else if (map[mlx->y][mlx->x] == 'C')
+		++mlx->coin;
 }
 
-void	map_check(t_data *map_data)
+void	map_check(t_mlx *mlx)
 {
 	char	**map;
 
-	map = map_data->map;
-	while (map[map_data->y])
+	map = mlx->map;
+	while (map[mlx->y])
 	{
-		map_data->x = -1;
-		while (map[map_data->y][++map_data->x])
-			ft_count_items(map_data);
-		if (map[++map_data->y])
-			if (map_data->x != (int)ft_strlen(map[map_data->y]))
+		mlx->x = -1;
+		while (map[mlx->y][++mlx->x])
+			ft_count_items(mlx);
+		if (map[++mlx->y])
+			if (mlx->x != (int)ft_strlen(map[mlx->y]))
 				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
 	}
-	if (map_data->y * SP_Y > WINDOW_Y || map_data->x * SP_X > WINDOW_X)
+	if (mlx->y * SP_Y > WINDOW_Y || mlx->x * SP_X > WINDOW_X)
 		ft_print_err(map, "\033[0;31mError: map is longer"
 			" than screen resolution");
-	if (map_data->player != 1 || map_data->exit != 1 || map_data->coin < 1)
+	if (mlx->player != 1 || mlx->exit != 1 || mlx->coin < 1)
 		ft_print_err(map, "\033[0;31mError: either the map contains a duplicates"
 			" items (P / E) or contains less than one (C) item");
 }
 
-bool	**ft_visited(t_data *map_data)
+bool	**ft_visited(t_mlx *mlx)
 {
 	bool	**visited;
 	int		i;
 
 	i = 0;
-	visited = ft_calloc(map_data->y + 1, sizeof(bool *));
+	visited = ft_calloc(mlx->y + 1, sizeof(bool *));
 	if (!visited)
-		ft_print_err(map_data->map, NULL);
-	while (i < map_data->y)
+		ft_print_err(mlx->map, NULL);
+	while (i < mlx->y)
 	{
-		visited[i] = ft_calloc(map_data->x, sizeof(bool));
+		visited[i] = ft_calloc(mlx->x, sizeof(bool));
 		if (!visited[i])
 		{
 			while (i--)
 				free(visited[i]);
 			free(visited);
-			ft_print_err(map_data->map, NULL);
+			ft_print_err(mlx->map, NULL);
 		}
 		++i;
 	}

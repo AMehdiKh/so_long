@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/16 22:32:50 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/17 09:26:10 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,33 @@
 # include "./ft_printf/ft_printf.h"
 # include "./LibFT/libft.h"
 
-#define WINDOW_X 2560
-#define WINDOW_Y 1440
+# define WINDOW_X 2560
+# define WINDOW_Y 1440
 
 # define SP_X 72
 # define SP_Y 72
 
-typedef struct s_data
-{
-	int		x;
-	int		y;
-	int		player;
-	int		coin;
-	int		exit;
-	int		changed;
-	int		p_pos[2];
-	char	**map;
-}	t_data;
+# define ESC_KEY 53
+# define RT_ARRW 124
+# define D_KEY 2
+# define LT_ARRW 123
+# define A_KEY 0
+# define DN_ARRW 125
+# define S_KEY 1
+# define UP_ARRW 126
+# define W_KEY 13
+
+
+// typedef struct s_data
+// {
+// 	int		x;
+// 	int		y;
+// 	int		player;
+// 	int		coin;
+// 	int		exit;
+// 	int		p_pos[2];
+// 	char	**map;
+// }	t_mlx;
 
 typedef struct s_node
 {
@@ -63,35 +73,45 @@ typedef struct s_mlx
 	void	*ptr;
 	void	*win;
 	void	*img;
+	char	**map;
+	int		x;
+	int		y;
+	int		player;
+	int		coin;
+	int		exit;
+	int		moves;
+	int		p_pos[2];
+	int		e_pos[2];
 }	t_mlx;
 
 char	**ft_coords(char *map_name);
 char	*ft_strjoin_long(char *s1, char *s2);
 void	*ft_free_return(void *ptr1, void *ptr2);
-void	map_check(t_data *map_data);
-void	ft_count_items(t_data *map_data);
+void	map_check(t_mlx *mlx);
+void	ft_count_items(t_mlx *mlx);
 
-bool	**ft_visited(t_data *map_data);
+bool	**ft_visited(t_mlx *mlx);
 t_node	*ft_newnode(int x, int y, t_queue *queue, char **map);
 void	ft_enqueue(t_queue *queue, char **map, int y, int x);
 void	ft_dequeue(t_queue *queue);
 void	ft_isvalid(t_queue *queue, char **map);
-void	ft_bfs(t_data *map_data);
+void	ft_bfs(t_mlx *mlx);
 
 void	ft_print_err(char **map, char *str);
 void	ft_clear(void **ptr);
 
-void	ft_mlx(t_mlx *mlx, t_data *map_data);
-void	ft_put_image(t_mlx *mlx, t_data *map_data);
-void	ft_put_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+void	ft_mlx(t_mlx *mlx);
+void	ft_put_image(t_mlx *mlx);
+void	ft_put_sprite(t_mlx *mlx, int x, int y);
 
-void	ft_exit_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+void	ft_exit_sprite(t_mlx *mlx, int x, int y);
 void	ft_space_sprite(t_mlx *mlx, int x, int y);
 void	ft_in_wall_sprite(t_mlx *mlx, int x, int y);
 void	ft_coins_sprite(t_mlx *mlx, int x, int y);
-void	ft_player_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
-void	ft_out_wall_sprite(t_mlx *mlx, t_data *map_data, int x, int y);
+void	ft_player_sprite(t_mlx *mlx, int x, int y);
+void	ft_out_wall_sprite(t_mlx *mlx, int x, int y);
 
-int		ft_close(int keycode, t_mlx *mlx);
+void	ft_close(t_mlx *mlx);
+int		ft_events(int keycode, t_mlx *mlx);
 
 #endif
