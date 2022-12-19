@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 07:35:40 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 17:31:56 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:44:24 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 		ft_print_err(NULL, "\033[0;31mError: either more/less than one"
 			" map entered or wrong spelling for the map name");
 	ft_bzero(mlx, sizeof(t_mlx));
-	mlx->map = ft_coords(av[1]);
+	mlx->map = ft_parse(av[1]);
 	map_check(mlx);
 	ft_bfs(mlx);
 	ft_mlx(mlx);

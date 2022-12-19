@@ -6,13 +6,14 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 17:33:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:44:24 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <stdio.h>
 
-char	**ft_coords(char *map_name)
+char	**ft_parse(char *map_name)
 {
 	char	**map;
 	char	*map_line;

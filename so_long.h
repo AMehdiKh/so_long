@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 17:40:04 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:44:24 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_mlx
 	int		e_pos[2];
 }	t_mlx;
 
-char	**ft_coords(char *map_name);
+char	**ft_parse(char *map_name);
 char	*ft_strjoin_long(char *s1, char *s2);
 void	*ft_free_return(void *ptr1, void *ptr2);
 void	map_check(t_mlx *mlx);

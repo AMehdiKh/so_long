@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 17:39:54 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:42:54 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	ft_moves(int keycode, t_mlx *mlx)
 		ft_down(mlx, &x, &y);
 	else if (keycode == UP_ARRW || keycode == W_KEY)
 		ft_up(mlx, &x, &y);
-	printf("\033[0;32mThe player move : %d\n", mlx->moves);
 	if (keycode == ESC_KEY
 		|| ((y == mlx->e_pos[0] && x == mlx->e_pos[1]) && !mlx->coin))
 		ft_esc(mlx, x, y);
