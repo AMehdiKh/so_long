@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/17 10:50:44 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:39:54 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,89 +65,29 @@ void	ft_mlx(t_mlx *mlx)
 		ft_print_err(map, "\033[0;31mError: MinilibX creating window failed");
 	}
 	ft_put_image(mlx);
-	mlx_hook(mlx->win, 2, 0, ft_events, mlx);
+	mlx_hook(mlx->win, 2, 0, ft_moves, mlx);
 	// mlx_loop_hook(mlx->ptr, ft_events, mlx);
 	mlx_loop(mlx->ptr);
 }
 
-int	ft_events(int keycode, t_mlx *mlx)
+int	ft_moves(int keycode, t_mlx *mlx)
 {
 	int	y;
 	int	x;
 
 	y = mlx->p_pos[0];
 	x = mlx->p_pos[1];
-
 	if (keycode == RT_ARRW || keycode == D_KEY)
-	{
-		if (mlx->map[y][x + 1] == '1')
-			return (0);
-		if (mlx->map[y][x + 1] == 'C' && mlx->coin)
-		{
-			ft_space_sprite(mlx, (x + 1), y);
-			--mlx->coin;
-		}
-		if (mlx->map[y][x] != 'E')
-			ft_space_sprite(mlx, x, y);
-		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
-		ft_player_sprite(mlx, ++x, y);
-		mlx->p_pos[1] = x;
-	}
+		ft_right(mlx, &x, &y);
 	else if (keycode == LT_ARRW || keycode == A_KEY)
-	{
-		if (mlx->map[y][x - 1] == '1')
-			return (0);
-		if (mlx->map[y][x - 1] == 'C' && mlx->coin)
-		{
-			ft_space_sprite(mlx, (x - 1), y);
-			--mlx->coin;
-		}
-		if (mlx->map[y][x] != 'E')
-			ft_space_sprite(mlx, x, y);
-		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
-		ft_player_sprite(mlx, --x, y);
-		mlx->p_pos[1] = x;
-	}
+		ft_left(mlx, &x, &y);
 	else if (keycode == DN_ARRW || keycode == S_KEY)
-	{
-		if (mlx->map[y + 1][x] == '1')
-			return (0);
-		if (mlx->map[y + 1][x] == 'C' && mlx->coin)
-		{
-			ft_space_sprite(mlx, x, (y + 1));
-			--mlx->coin;
-		}
-		if (mlx->map[y][x] != 'E')
-			ft_space_sprite(mlx, x, y);
-		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
-		ft_player_sprite(mlx, x, ++y);
-		mlx->p_pos[0] = y;
-	}
+		ft_down(mlx, &x, &y);
 	else if (keycode == UP_ARRW || keycode == W_KEY)
-	{
-		if (mlx->map[y - 1][x] == '1')
-			return (0);
-		if (mlx->map[y - 1][x] == 'C' && mlx->coin)
-		{
-			ft_space_sprite(mlx, x, (y - 1));
-			--mlx->coin;
-		}
-		if (mlx->map[y][x] != 'E')
-			ft_space_sprite(mlx, x, y);
-		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
-		ft_player_sprite(mlx, x, --y);
-		mlx->p_pos[0] = y;
-	}
-	++mlx->moves;
-	printf("The player move : %d\n", mlx->moves);
+		ft_up(mlx, &x, &y);
+	printf("\033[0;32mThe player move : %d\n", mlx->moves);
 	if (keycode == ESC_KEY
 		|| ((y == mlx->e_pos[0] && x == mlx->e_pos[1]) && !mlx->coin))
-	{
-		mlx_destroy_image(mlx->ptr, mlx->img);
-		mlx_destroy_window(mlx->ptr, mlx->win);
-		ft_clear((void **)mlx->map);
-		free(mlx->ptr);
-		exit(EXIT_SUCCESS);
-	}
+		ft_esc(mlx, x, y);
 	return (0);
 }

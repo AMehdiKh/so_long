@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/17 09:26:10 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:40:04 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,6 @@
 # define S_KEY 1
 # define UP_ARRW 126
 # define W_KEY 13
-
-
-// typedef struct s_data
-// {
-// 	int		x;
-// 	int		y;
-// 	int		player;
-// 	int		coin;
-// 	int		exit;
-// 	int		p_pos[2];
-// 	char	**map;
-// }	t_mlx;
 
 typedef struct s_node
 {
@@ -112,6 +100,12 @@ void	ft_player_sprite(t_mlx *mlx, int x, int y);
 void	ft_out_wall_sprite(t_mlx *mlx, int x, int y);
 
 void	ft_close(t_mlx *mlx);
-int		ft_events(int keycode, t_mlx *mlx);
+int		ft_moves(int keycode, t_mlx *mlx);
+
+void	ft_right(t_mlx *mlx, int *x, int *y);
+void	ft_left(t_mlx *mlx, int *x, int *y);
+void	ft_down(t_mlx *mlx, int *x, int *y);
+void	ft_up(t_mlx *mlx, int *x, int *y);
+void	ft_esc(t_mlx *mlx, int x, int y);
 
 #endif

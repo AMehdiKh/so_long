@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c map_parse.c valid_path.c outils.c graphics.c sprites.c
+SRCS = main.c map_parse.c valid_path.c outils.c graphics.c sprites.c ft_moves.c
 
 OBJS = ${SRCS:.c=.o}
 

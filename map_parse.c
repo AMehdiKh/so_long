@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/17 07:52:57 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:33:20 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ char	**ft_coords(char *map_name)
 	char	**map;
 	char	*map_line;
 	char	*one_line;
-	char	*file_path;
 	int		fd;
 
-	file_path = ft_strjoin("./maps/", map_name);
-	fd = open(file_path, O_RDONLY);
-	free(file_path);
+	if (!(ft_strncmp(map_name + (ft_strlen(map_name) - 4), ".der", 4)))
+		map_name = ft_strjoin("./maps/", map_name);
+	fd = open(map_name, O_RDONLY);
+	if (!(ft_strncmp(map_name + (ft_strlen(map_name) - 4), ".der", 4)))
+		free(map_name);
 	if (fd < 0)
 		ft_print_err(NULL, NULL);
 	one_line = ft_calloc(4096, 1);
