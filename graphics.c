@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 20:42:54 by ael-khel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:17:29 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,29 @@
 #include "so_long.h"
 #include <stdio.h>
 
-void	ft_put_sprite(t_mlx *mlx, int x, int y)
-{
-	ft_space_sprite(mlx, x, y);
-	if (mlx->map[y][x] == 'P')
-		ft_player_sprite(mlx, x, y);
-	else if (mlx->map[y][x] == '1')
-		ft_in_wall_sprite(mlx, x, y);
-	else if (mlx->map[y][x] == 'C')
-		ft_coins_sprite(mlx, x, y);
-	else if (mlx->map[y][x] == 'E')
-		ft_exit_sprite(mlx, x, y);
-}
-
 void	ft_put_image(t_mlx *mlx)
 {
-	int		x;
-	int		y;
-	char	**map;
+	int	x;
+	int	y;
 
-	map = mlx->map;
 	y = -1;
-	while (map[++y])
+	while (mlx->map[++y])
 	{
 		x = -1;
-		while (map[y][++x])
+		while (mlx->map[y][++x])
 		{
-			if (y == 0 || !(map[y + 1]) || x == 0
-				|| !(map[y][x + 1]))
+			ft_space_sprite(mlx, x, y);
+			if (y == 0 || !(mlx->map[y + 1]) || x == 0
+				|| !(mlx->map[y][x + 1]))
 				ft_out_wall_sprite(mlx, x, y);
-			else
-				ft_put_sprite(mlx, x, y);
+			else if (mlx->map[y][x] == '1')
+				ft_in_wall_sprite(mlx, x, y);
+			else if (mlx->map[y][x] == 'C')
+				ft_coins_sprite(mlx, x, y);
+			else if (mlx->map[y][x] == 'E')
+				ft_exit_sprite(mlx, x, y);
+			else if (mlx->map[y][x] == 'P')
+				ft_player_sprite(mlx, x, y);
 		}
 	}
 }
