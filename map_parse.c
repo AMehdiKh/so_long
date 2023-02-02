@@ -6,39 +6,33 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 20:44:24 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:31:19 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
 
-char	**ft_parse(char *map_name)
+char	**ft_parse(char *map_name, char **map)
 {
-	char	**map;
-	char	*map_line;
-	char	*one_line;
-	int		fd;
+	t_parse	prs[1];
 
 	if (!(ft_strncmp(map_name + (ft_strlen(map_name) - 4), ".der", 4)))
 		map_name = ft_strjoin("./maps/", map_name);
 	fd = open(map_name, O_RDONLY);
-	if (!(ft_strncmp(map_name + (ft_strlen(map_name) - 4), ".der", 4)))
-		free(map_name);
+	free(map_name);
 	if (fd < 0)
 		ft_print_err(NULL, NULL);
-	one_line = ft_calloc(4096, 1);
+	buffer = ft_calloc(4096, 1);
 	map_line = ft_calloc(1, 1);
-	if (!one_line || !map_line)
+	if (!buffer || !map_line)
 		ft_print_err(NULL, NULL);
-	while (read(fd, one_line, 4096))
-		map_line = ft_strjoin_long(map_line, one_line);
+	while (read(fd, buffer, 4096))
+		map_line = ft_strjoin_long(map_line, buffer);
 	close(fd);
 	map = ft_split(map_line, '\n');
-	ft_free_return(map_line, one_line);
+	ft_free_return(map_line, buffer);
 	if (!map || !*map)
 		ft_print_err(map, "\033[0;31mError: map is empty");
-	return (map);
 }
 
 void	ft_count_items(t_mlx *mlx)
@@ -84,7 +78,7 @@ void	map_check(t_mlx *mlx)
 			if (mlx->x != (int)ft_strlen(map[mlx->y]))
 				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
 	}
-	if (mlx->y * SP_Y > WINDOW_Y || mlx->x * SP_X > WINDOW_X)
+	if (mlx->y * 72 > mlx->max_height || mlx->x * 72 > mlx->max_width)
 		ft_print_err(map, "\033[0;31mError: map is longer"
 			" than screen resolution");
 	if (mlx->player != 1 || mlx->exit != 1 || mlx->coin < 1)

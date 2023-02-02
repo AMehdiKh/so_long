@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/17 10:39:33 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:52:49 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_exit_sprite(t_mlx *mlx, int x, int y)
 	else
 		mlx->img = mlx_xpm_file_to_image(mlx->ptr,
 				"./xpm/open_door.xpm", &size, &size);
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * SP_X, y * SP_Y);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * 72, y * 72);
 }
 
 void	ft_space_sprite(t_mlx *mlx, int x, int y)
@@ -30,7 +30,7 @@ void	ft_space_sprite(t_mlx *mlx, int x, int y)
 	int	size;
 
 	mlx->img = mlx_xpm_file_to_image(mlx->ptr, "./xpm/space.xpm", &size, &size);
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * SP_X, y * SP_Y);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * 72, y * 72);
 }
 
 void	ft_in_wall_sprite(t_mlx *mlx, int x, int y)
@@ -38,7 +38,7 @@ void	ft_in_wall_sprite(t_mlx *mlx, int x, int y)
 	int	size;
 
 	mlx->img = mlx_xpm_file_to_image(mlx->ptr, "./xpm/eye.xpm", &size, &size);
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * SP_X, y * SP_Y);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * 72, y * 72);
 }
 
 void	ft_coins_sprite(t_mlx *mlx, int x, int y)
@@ -46,7 +46,7 @@ void	ft_coins_sprite(t_mlx *mlx, int x, int y)
 	int	size;
 
 	mlx->img = mlx_xpm_file_to_image(mlx->ptr, "./xpm/coins.xpm", &size, &size);
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * SP_X, y * SP_Y);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * 72, y * 72);
 }
 
 void	ft_player_sprite(t_mlx *mlx, int x, int y)
@@ -62,9 +62,9 @@ void	ft_player_sprite(t_mlx *mlx, int x, int y)
 	}
 	mlx->img = mlx_xpm_file_to_image(mlx->ptr, "./xpm/star.xpm", &size, &size);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img,
-		star_x * SP_X, star_y * SP_Y);
+		star_x * 72, star_y * 72);
 	mlx->img = mlx_xpm_file_to_image(mlx->ptr, "./xpm/play.xpm", &size, &size);
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * SP_X, y * SP_Y);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, x * 72, y * 72);
 }
 
 void	ft_out_wall_sprite(t_mlx *mlx, int x, int y)
@@ -77,6 +77,6 @@ void	ft_out_wall_sprite(t_mlx *mlx, int x, int y)
 		mlx->img = mlx_xpm_file_to_image(mlx->ptr, "./xpm/torch1.xpm",
 				&size, &size);
 		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img,
-			x * SP_X, y * SP_Y);
+			x * 72, y * 72);
 	}
 }

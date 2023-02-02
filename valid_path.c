@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/17 06:52:28 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:57:58 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,26 @@ void	ft_bfs(t_mlx *mlx)
 	t_queue	queue[1];
 	int		valid_coins;
 	int		valid_exit;
-	char	**map;
 
-	ft_bzero(queue, sizeof(t_queue));
 	valid_coins = 0;
 	valid_exit = 0;
-	map = mlx->map;
+	ft_bzero(queue, sizeof(t_queue));
 	queue->visited = ft_visited(mlx);
-	ft_enqueue(queue, map, mlx->p_pos[0], mlx->p_pos[1]);
+	ft_enqueue(queue, mlx->map, mlx->p_pos[0], mlx->p_pos[1]);
 	while (queue->size)
 	{
-		ft_isvalid(queue, map);
-		if (map[queue->front->y][queue->front->x] == 'E')
+		ft_isvalid(queue, mlx->map);
+		if (mlx->map[queue->front->y][queue->front->x] == 'E')
 			valid_exit = 1;
-		else if (map[queue->front->y][queue->front->x] == 'C')
+		else if (mlx->map[queue->front->y][queue->front->x] == 'C')
 			++valid_coins;
 		ft_dequeue(queue);
+		if (valid_exit && valid_coins == mlx->coin)
+			while (queue->size)
+				ft_dequeue(queue);
 	}
 	ft_clear((void **)queue->visited);
 	if (valid_coins != mlx->coin || !valid_exit)
-		ft_print_err(map, "\033[0;31mError: the player in the map has"
+		ft_print_err(mlx->map, "\033[0;31mError: the player in the map has"
 			" invalid path, either to the exit or the collectibles or both");
 }

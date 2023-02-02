@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 20:57:03 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:14:42 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,21 @@ void	ft_up(t_mlx *mlx, int *x, int *y)
 
 void	ft_esc(t_mlx *mlx, int x, int y)
 {
-	char	**won_msg;
+	char	**win_msg;
 	int		i;
 
-	won_msg = NULL;
+	win_msg = NULL;
 	if ((y == mlx->e_pos[0] && x == mlx->e_pos[1]) && !mlx->coin)
 	{
 		i = 12;
-		won_msg = ft_parse("result_msg.c");
+		ft_parse("result_msg.c", win_msg);
 		while (i < 20)
-			ft_printf("\033[0;32m%s\n", won_msg[i++]);
+			ft_printf("\033[0;32m%s\n", win_msg[i++]);
 	}
 	mlx_destroy_image(mlx->ptr, mlx->img);
 	mlx_destroy_window(mlx->ptr, mlx->win);
 	ft_clear((void **)mlx->map);
-	ft_clear((void **)won_msg);
+	ft_clear((void **)win_msg);
 	free(mlx->ptr);
 	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/19 20:44:24 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:19:51 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@
 # include <stdio.h>
 # include <math.h>
 # include <errno.h>
-# include <mlx.h>
+# include "./MLX42/include/MLX.h"
 # include "./ft_printf/ft_printf.h"
 # include "./LibFT/libft.h"
-
-# define WINDOW_X 2560
-# define WINDOW_Y 1440
-
-# define SP_X 72
-# define SP_Y 72
 
 # define ESC_KEY 53
 # define RT_ARRW 124
@@ -48,8 +42,15 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
+typedef struct s_parse
+{
+	int	fd;
+	char	*map_line;
+	char	*buffer;
+}	t_parse;
+
 typedef struct s_queue
-{	
+{
 	t_node		*front;
 	t_node		*rear;
 	int			size;
@@ -58,9 +59,6 @@ typedef struct s_queue
 
 typedef struct s_mlx
 {
-	void	*ptr;
-	void	*win;
-	void	*img;
 	char	**map;
 	int		x;
 	int		y;
@@ -68,6 +66,8 @@ typedef struct s_mlx
 	int		coin;
 	int		exit;
 	int		moves;
+	int		max_width;
+	int		max_height;
 	int		p_pos[2];
 	int		e_pos[2];
 }	t_mlx;

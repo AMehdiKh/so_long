@@ -12,13 +12,13 @@ OBJS = ${SRCS:.c=.o}
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) libft.a libftprintf.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJS) libft.a libftprintf.a -fsanitize=address -static-libsan -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Imlx -c $<
+	$(CC) $(CFLAGS) -Imlx -fsanitize=address -c $<
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) *.d
 
 fclean: clean
 	rm -f $(NAME)

@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/20 15:17:29 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:52:49 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_mlx(t_mlx *mlx)
 	if (!mlx->ptr)
 		ft_print_err(map, "\033[0;31mError: MinilibX initialization failed");
 	mlx->win = mlx_new_window(mlx->ptr,
-			mlx->x * SP_X, mlx->y * SP_Y, "so_long");
+			mlx->x * 72, mlx->y * 72, "so_long");
 	if (!mlx->win)
 	{
 		free(mlx->ptr);
