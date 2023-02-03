@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/02 19:52:49 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 07:43:54 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	ft_put_image(t_mlx *mlx)
 		while (mlx->map[y][++x])
 		{
 			ft_space_sprite(mlx, x, y);
-			if (y == 0 || !(mlx->map[y + 1]) || x == 0
-				|| !(mlx->map[y][x + 1]))
+			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
 				ft_out_wall_sprite(mlx, x, y);
 			else if (mlx->map[y][x] == '1')
 				ft_in_wall_sprite(mlx, x, y);
@@ -46,29 +45,22 @@ void	ft_mlx(t_mlx *mlx)
 	char	**map;
 
 	map = mlx->map;
-	mlx->ptr = mlx_init();
-	if (!mlx->ptr)
-		ft_print_err(map, "\033[0;31mError: MinilibX initialization failed");
-	mlx->win = mlx_new_window(mlx->ptr,
-			mlx->x * 72, mlx->y * 72, "so_long");
+	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "So_Long!", false);
 	if (!mlx->win)
-	{
-		free(mlx->ptr);
-		ft_print_err(map, "\033[0;31mError: MinilibX creating window failed");
-	}
+		ft_print_err(map, "\e[0;31mError: MinilibX initialization failed");
 	ft_put_image(mlx);
 	mlx_hook(mlx->win, 2, 0, ft_moves, mlx);
-	// mlx_loop_hook(mlx->ptr, ft_events, mlx);
-	mlx_loop(mlx->ptr);
+	mlx_loop(mlx->win);
+	mlx_terminate(mlx->win);
 }
 
 int	ft_moves(int keycode, t_mlx *mlx)
 {
-	int	y;
 	int	x;
+	int	y;
 
-	y = mlx->p_pos[0];
-	x = mlx->p_pos[1];
+	x = mlx->p_cord->x;
+	y = mlx->p_cord->y;
 	if (keycode == RT_ARRW || keycode == D_KEY)
 		ft_right(mlx, &x, &y);
 	else if (keycode == LT_ARRW || keycode == A_KEY)

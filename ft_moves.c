@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/02 20:14:42 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:21:41 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_right(t_mlx *mlx, int *x, int *y)
 		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
 		ft_player_sprite(mlx, ++*x, *y);
 		mlx->p_pos[1] = *x;
-		ft_printf("\033[0;32mThe player move : %d\n", ++mlx->moves);
+		ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 	}
 }
 
@@ -46,7 +46,7 @@ void	ft_left(t_mlx *mlx, int *x, int *y)
 		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
 		ft_player_sprite(mlx, --*x, *y);
 		mlx->p_pos[1] = *x;
-		ft_printf("\033[0;32mThe player move : %d\n", ++mlx->moves);
+		ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 	}
 }
 
@@ -65,7 +65,7 @@ void	ft_down(t_mlx *mlx, int *x, int *y)
 		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
 		ft_player_sprite(mlx, *x, ++*y);
 		mlx->p_pos[0] = *y;
-		ft_printf("\033[0;32mThe player move : %d\n", ++mlx->moves);
+		ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 	}
 }
 
@@ -84,7 +84,7 @@ void	ft_up(t_mlx *mlx, int *x, int *y)
 		ft_exit_sprite(mlx, mlx->e_pos[1], mlx->e_pos[0]);
 		ft_player_sprite(mlx, *x, --*y);
 		mlx->p_pos[0] = *y;
-		ft_printf("\033[0;32mThe player move : %d\n", ++mlx->moves);
+		ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 	}
 }
 
@@ -99,7 +99,7 @@ void	ft_esc(t_mlx *mlx, int x, int y)
 		i = 12;
 		ft_parse("result_msg.c", win_msg);
 		while (i < 20)
-			ft_printf("\033[0;32m%s\n", win_msg[i++]);
+			ft_printf("\e[0;32m%s\n", win_msg[i++]);
 	}
 	mlx_destroy_image(mlx->ptr, mlx->img);
 	mlx_destroy_window(mlx->ptr, mlx->win);

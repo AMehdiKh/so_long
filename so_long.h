@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/02 20:19:51 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:44:43 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,17 @@
 # define UP_ARRW 126
 # define W_KEY 13
 
+typedef struct s_cord
+{
+	int	x;
+	int	y;
+}	t_cord;
+
 typedef struct s_node
 {
-	int				x;
-	int				y;
+	t_cord	cord[1];
 	struct s_node	*next;
 }	t_node;
-
-typedef struct s_parse
-{
-	int	fd;
-	char	*map_line;
-	char	*buffer;
-}	t_parse;
 
 typedef struct s_queue
 {
@@ -59,17 +57,19 @@ typedef struct s_queue
 
 typedef struct s_mlx
 {
-	char	**map;
-	int		x;
-	int		y;
-	int		player;
-	int		coin;
-	int		exit;
-	int		moves;
-	int		max_width;
-	int		max_height;
-	int		p_pos[2];
-	int		e_pos[2];
+	mlx_image_t	*img;
+	mlx_t		*win;
+	t_cord		p_cord[1];
+	t_cord		e_cord[1];
+	char		**map;
+	int			x;
+	int			y;
+	int			player;
+	int			coin;
+	int			exit;
+	int			moves;
+	int			max_width;
+	int			max_height;
 }	t_mlx;
 
 char	**ft_parse(char *map_name);

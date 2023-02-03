@@ -6,13 +6,13 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/02 16:57:58 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:21:41 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_node	*ft_newnode(int x, int y, t_queue *queue, char **map)
+t_node	*ft_newnode(t_queue *queue, char **map, t_cord *cord)
 {
 	t_node	*node;
 
@@ -24,23 +24,23 @@ t_node	*ft_newnode(int x, int y, t_queue *queue, char **map)
 		ft_clear((void **)queue->visited);
 		ft_print_err(map, NULL);
 	}
-	node->x = x;
-	node->y = y;
+	node->cord->x = cord->x;
+	node->cord->y = cord->y;
 	node->next = NULL;
 	return (node);
 }
 
-void	ft_enqueue(t_queue *queue, char **map, int y, int x)
+void	ft_enqueue(t_queue *queue, char **map, t_cord *cord)
 {
 	t_node	*node;
 
-	node = ft_newnode(x, y, queue, map);
+	node = ft_newnode(queue, map, cord);
 	if (!queue->size)
 		queue->front = node;
 	if (queue->rear)
 		queue->rear->next = node;
 	queue->rear = node;
-	queue->visited[y][x] = true;
+	queue->visited[cord->y][cord->x] = true;
 	++queue->size;
 }
 
@@ -59,8 +59,8 @@ void	ft_isvalid(t_queue *queue, char **map)
 	int	x;
 	int	y;
 
-	x = queue->front->x;
-	y = queue->front->y;
+	x = queue->front->cord->x;
+	y = queue->front->cord->y;
 	if (map[y + 1][x] != '1' && !queue->visited[y + 1][x])
 		ft_enqueue(queue, map, y + 1, x);
 	if (map[y - 1][x] != '1' && !queue->visited[y - 1][x])
@@ -81,13 +81,13 @@ void	ft_bfs(t_mlx *mlx)
 	valid_exit = 0;
 	ft_bzero(queue, sizeof(t_queue));
 	queue->visited = ft_visited(mlx);
-	ft_enqueue(queue, mlx->map, mlx->p_pos[0], mlx->p_pos[1]);
+	ft_enqueue(queue, mlx->map, mlx->p_cord);
 	while (queue->size)
 	{
 		ft_isvalid(queue, mlx->map);
-		if (mlx->map[queue->front->y][queue->front->x] == 'E')
+		if (mlx->map[queue->front->cord->y][queue->front->cord->x] == 'E')
 			valid_exit = 1;
-		else if (mlx->map[queue->front->y][queue->front->x] == 'C')
+		else if (mlx->map[queue->front->cord->y][queue->front->cord->x] == 'C')
 			++valid_coins;
 		ft_dequeue(queue);
 		if (valid_exit && valid_coins == mlx->coin)
@@ -96,6 +96,6 @@ void	ft_bfs(t_mlx *mlx)
 	}
 	ft_clear((void **)queue->visited);
 	if (valid_coins != mlx->coin || !valid_exit)
-		ft_print_err(mlx->map, "\033[0;31mError: the player in the map has"
+		ft_print_err(mlx->map, "\e[0;31mError: the player in the map has"
 			" invalid path, either to the exit or the collectibles or both");
 }

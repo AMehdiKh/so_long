@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:51:37 by ael-khel          #+#    #+#             */
-/*   Updated: 2022/12/07 07:49:16 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:21:41 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	ft_print_err(char **map, char *str)
 	if (map)
 		ft_clear((void **)map);
 	if (errno)
-		perror("\033[0;31mError ");
+		perror("\e[0;31mError ");
 	if (str)
 		ft_putendl_fd(str, 2);
-	ft_printf("\033[0;32mIt must run like this : ./so_long map_name.der\n");
+	ft_printf("\e[0;32mIt must run like this : ./so_long map_name.der\n");
 	exit(EXIT_FAILURE);
 }
 

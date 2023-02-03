@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/02 20:31:19 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:24:35 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,56 @@
 
 char	**ft_parse(char *map_name, char **map)
 {
-	t_parse	prs[1];
+	char	**map;
+	int		fd;
 
-	if (!(ft_strncmp(map_name + (ft_strlen(map_name) - 4), ".der", 4)))
-		map_name = ft_strjoin("./maps/", map_name);
+	map_name = ft_strjoin("./maps/", map_name);
 	fd = open(map_name, O_RDONLY);
-	free(map_name);
 	if (fd < 0)
-		ft_print_err(NULL, NULL);
-	buffer = ft_calloc(4096, 1);
-	map_line = ft_calloc(1, 1);
-	if (!buffer || !map_line)
-		ft_print_err(NULL, NULL);
-	while (read(fd, buffer, 4096))
-		map_line = ft_strjoin_long(map_line, buffer);
-	close(fd);
-	map = ft_split(map_line, '\n');
-	ft_free_return(map_line, buffer);
+	{
+		fd = open(map_name + 7, O_RDONLY);
+		if (fd < 0)
+		{
+			free(map_name);
+			ft_print_err(NULL, NULL);
+		}
+	}
+	free(map_name);
+	line = ft_line(fd);
+	map = ft_split(line, '\n');
+	free(line);
 	if (!map || !*map)
-		ft_print_err(map, "\033[0;31mError: map is empty");
+		ft_print_err(map, "\e[0;31mError: map is empty");
+	return (map);
+}
+
+char	*ft_line(int fd)
+{
+	char	*buffer;
+	char	*line;
+	int		nbyte;
+
+	buffer = ft_calloc(4096, 1);
+	line = ft_calloc(1, 1);
+	nbyte = 1;
+	if (!buffer || !line)
+		ft_free_return(line, buffer);
+	if (!buffer || !line)
+		ft_print_err(NULL, NULL);
+	while (nbyte)
+	{
+		nbyte = read(fd, buffer, 4096);
+		if (nbyte < 0)
+		{
+			ft_free_return(line, buffer);
+			ft_print_err(NULL, NULL);
+		}
+		if (nbyte)
+			line = ft_strjoin_long(line, buffer);
+	}
+	close(fd);
+	free(buffer);
+	return (line);
 }
 
 void	ft_count_items(t_mlx *mlx)
@@ -42,26 +73,26 @@ void	ft_count_items(t_mlx *mlx)
 	map = mlx->map;
 	if (!ft_strchr("10PCE", map[mlx->y][mlx->x]))
 		ft_print_err(map,
-			"\033[0;31mError: map composed with invalid characters");
+			"\e[0;31mError: map composed with invalid characters");
 	if (mlx->y == 0 || !(map[mlx->y + 1]) || mlx->x == 0
 		|| !(map[mlx->y][mlx->x + 1]))
 		if (map[mlx->y][mlx->x] != '1')
 			ft_print_err(map,
-				"\033[0;31mError: The map is not surrounded by walls");
-	if (map[mlx->y][mlx->x] == 'P')
+				"\e[0;31mError: The map is not surrounded by walls");
+	if (map[mlx->y][mlx->x] == 'C')
+		++mlx->coin;
+	else if (map[mlx->y][mlx->x] == 'P')
 	{
-		mlx->p_pos[0] = mlx->y;
-		mlx->p_pos[1] = mlx->x;
+		mlx->p_cord->y = mlx->y;
+		mlx->p_cord->x = mlx->x;
 		++mlx->player;
 	}
 	else if (map[mlx->y][mlx->x] == 'E')
 	{
-		mlx->e_pos[0] = mlx->y;
-		mlx->e_pos[1] = mlx->x;
+		mlx->e_cord->y = mlx->y;
+		mlx->e_cord->x = mlx->x;
 		++mlx->exit;
 	}
-	else if (map[mlx->y][mlx->x] == 'C')
-		++mlx->coin;
 }
 
 void	map_check(t_mlx *mlx)
@@ -76,13 +107,12 @@ void	map_check(t_mlx *mlx)
 			ft_count_items(mlx);
 		if (map[++mlx->y])
 			if (mlx->x != (int)ft_strlen(map[mlx->y]))
-				ft_print_err(map, "\033[0;31mError: The map is not rectangular");
+				ft_print_err(map, "\e[0;31mError: The map is not rectangular");
 	}
 	if (mlx->y * 72 > mlx->max_height || mlx->x * 72 > mlx->max_width)
-		ft_print_err(map, "\033[0;31mError: map is longer"
-			" than screen resolution");
+		ft_print_err(map, "\e[0;31mError: The map is bigger than monitor size");
 	if (mlx->player != 1 || mlx->exit != 1 || mlx->coin < 1)
-		ft_print_err(map, "\033[0;31mError: either the map contains a duplicates"
+		ft_print_err(map, "\e[0;31mError: either the map contains a duplicates"
 			" items (P / E) or contains less than one (C) item");
 }
 
