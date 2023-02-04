@@ -6,13 +6,13 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/03 05:21:41 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:35:33 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_node	*ft_newnode(t_queue *queue, char **map, t_cord *cord)
+t_node	*ft_newnode(t_queue *queue, char **map, int x, int y)
 {
 	t_node	*node;
 
@@ -24,23 +24,23 @@ t_node	*ft_newnode(t_queue *queue, char **map, t_cord *cord)
 		ft_clear((void **)queue->visited);
 		ft_print_err(map, NULL);
 	}
-	node->cord->x = cord->x;
-	node->cord->y = cord->y;
+	node->cord->x = x;
+	node->cord->y = y;
 	node->next = NULL;
 	return (node);
 }
 
-void	ft_enqueue(t_queue *queue, char **map, t_cord *cord)
+void	ft_enqueue(t_queue *queue, char **map, int x, int y)
 {
 	t_node	*node;
 
-	node = ft_newnode(queue, map, cord);
+	node = ft_newnode(queue, map, x, y);
 	if (!queue->size)
 		queue->front = node;
 	if (queue->rear)
 		queue->rear->next = node;
 	queue->rear = node;
-	queue->visited[cord->y][cord->x] = true;
+	queue->visited[y][x] = true;
 	++queue->size;
 }
 
@@ -62,13 +62,13 @@ void	ft_isvalid(t_queue *queue, char **map)
 	x = queue->front->cord->x;
 	y = queue->front->cord->y;
 	if (map[y + 1][x] != '1' && !queue->visited[y + 1][x])
-		ft_enqueue(queue, map, y + 1, x);
+		ft_enqueue(queue, map, x, y + 1);
 	if (map[y - 1][x] != '1' && !queue->visited[y - 1][x])
-		ft_enqueue(queue, map, y - 1, x);
+		ft_enqueue(queue, map, x, y - 1);
 	if (map[y][x + 1] != '1' && !queue->visited[y][x + 1])
-		ft_enqueue(queue, map, y, x + 1);
+		ft_enqueue(queue, map, x + 1, y);
 	if (map[y][x - 1] != '1' && !queue->visited[y][x - 1])
-		ft_enqueue(queue, map, y, x - 1);
+		ft_enqueue(queue, map, x - 1, y);
 }
 
 void	ft_bfs(t_mlx *mlx)
@@ -81,7 +81,7 @@ void	ft_bfs(t_mlx *mlx)
 	valid_exit = 0;
 	ft_bzero(queue, sizeof(t_queue));
 	queue->visited = ft_visited(mlx);
-	ft_enqueue(queue, mlx->map, mlx->p_cord);
+	ft_enqueue(queue, mlx->map, mlx->p_cord->y, mlx->p_cord->x);
 	while (queue->size)
 	{
 		ft_isvalid(queue, mlx->map);

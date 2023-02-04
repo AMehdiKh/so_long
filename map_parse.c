@@ -6,15 +6,16 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/03 05:24:35 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/03 20:13:06 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	**ft_parse(char *map_name, char **map)
+char	**ft_parse(char *map_name)
 {
 	char	**map;
+	char	*line;
 	int		fd;
 
 	map_name = ft_strjoin("./maps/", map_name);
@@ -109,7 +110,7 @@ void	map_check(t_mlx *mlx)
 			if (mlx->x != (int)ft_strlen(map[mlx->y]))
 				ft_print_err(map, "\e[0;31mError: The map is not rectangular");
 	}
-	if (mlx->y * 72 > mlx->max_height || mlx->x * 72 > mlx->max_width)
+	if ((mlx->y * 72) > mlx->max_height || (mlx->x * 72) > mlx->max_width)
 		ft_print_err(map, "\e[0;31mError: The map is bigger than monitor size");
 	if (mlx->player != 1 || mlx->exit != 1 || mlx->coin < 1)
 		ft_print_err(map, "\e[0;31mError: either the map contains a duplicates"

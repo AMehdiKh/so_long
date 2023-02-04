@@ -6,13 +6,11 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/03 07:43:54 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/04 05:47:42 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "man.h"
 #include "so_long.h"
-#include <stdio.h>
 
 void	ft_put_image(t_mlx *mlx)
 {
@@ -25,13 +23,13 @@ void	ft_put_image(t_mlx *mlx)
 		x = -1;
 		while (mlx->map[y][++x])
 		{
-			ft_space_sprite(mlx, x, y);
+			ft_image_to_window(mlx, "./textures/space.png", x, y);
 			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
-				ft_out_wall_sprite(mlx, x, y);
+				ft_image_to_window(mlx, "./textures/torch.png", x, y);
 			else if (mlx->map[y][x] == '1')
-				ft_in_wall_sprite(mlx, x, y);
+				ft_image_to_window(mlx, "./textures/eye.png", x, y);
 			else if (mlx->map[y][x] == 'C')
-				ft_coins_sprite(mlx, x, y);
+				ft_image_to_window(mlx, "./textures/coin.png", x, y);
 			else if (mlx->map[y][x] == 'E')
 				ft_exit_sprite(mlx, x, y);
 			else if (mlx->map[y][x] == 'P')
@@ -45,32 +43,37 @@ void	ft_mlx(t_mlx *mlx)
 	char	**map;
 
 	map = mlx->map;
-	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "So_Long!", false);
+	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "So_Long!", true);
 	if (!mlx->win)
 		ft_print_err(map, "\e[0;31mError: MinilibX initialization failed");
 	ft_put_image(mlx);
-	mlx_hook(mlx->win, 2, 0, ft_moves, mlx);
+	mlx_loop_hook(mlx->win, &ft_moves, mlx);
 	mlx_loop(mlx->win);
-	mlx_terminate(mlx->win);
 }
 
-int	ft_moves(int keycode, t_mlx *mlx)
+void	ft_moves(void *param)
 {
-	int	x;
-	int	y;
+	t_mlx	*mlx;
+	mlx_t	*win;
+	int		x;
+	int		y;
 
+	mlx = param;
+	win = mlx->win;
 	x = mlx->p_cord->x;
 	y = mlx->p_cord->y;
-	if (keycode == RT_ARRW || keycode == D_KEY)
-		ft_right(mlx, &x, &y);
-	else if (keycode == LT_ARRW || keycode == A_KEY)
-		ft_left(mlx, &x, &y);
-	else if (keycode == DN_ARRW || keycode == S_KEY)
-		ft_down(mlx, &x, &y);
-	else if (keycode == UP_ARRW || keycode == W_KEY)
+	if (mlx_is_key_down(win, MLX_KEY_UP) || mlx_is_key_down(win, MLX_KEY_W))
 		ft_up(mlx, &x, &y);
-	if (keycode == ESC_KEY
-		|| ((y == mlx->e_pos[0] && x == mlx->e_pos[1]) && !mlx->coin))
+	if (mlx_is_key_down(win, MLX_KEY_DOWN)
+		|| mlx_is_key_down(win, MLX_KEY_S))
+		ft_down(mlx, &x, &y);
+	if (mlx_is_key_down(win, MLX_KEY_LEFT)
+		|| mlx_is_key_down(win, MLX_KEY_A))
+		ft_left(mlx, &x, &y);
+	if (mlx_is_key_down(win, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(win, MLX_KEY_D))
+		ft_right(mlx, &x, &y);
+	if ((y == mlx->e_cord->y && x == mlx->e_cord->x && !mlx->coin)
+		|| mlx_is_key_down(win, MLX_KEY_ESCAPE))
 		ft_esc(mlx, x, y);
-	return (0);
 }

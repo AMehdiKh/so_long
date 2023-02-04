@@ -1,11 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
-#include "/Users/ael-khel/MLX42/include/MLX42/MLX42.h"
+#include "/home/amehdikh/MLX42/include/MLX42/MLX42.h"
 #define WIDTH 512
 #define HEIGHT 512
 
 static mlx_image_t* img;
+
+void	ft_image_to_window(mlx_t *mlx, char *png_path, int x, int y)
+{
+	mlx_texture_t	*png;
+
+	png = mlx_load_png(png_path);
+	if (!png)
+	{
+		mlx_delete_image(mlx, img);
+		mlx_terminate(mlx);
+		printf("l7wa");
+	}
+	img = mlx_texture_to_image(mlx, png);
+	if (!img)
+	{
+		mlx_delete_texture(png);
+		mlx_delete_image(mlx, img);
+		mlx_terminate(mlx);
+		printf("zbi");
+	}
+	printf("\n%d\n", mlx_image_to_window(mlx, img, x * 72, y * 72));
+	mlx_delete_texture(png);
+}
 
 void hook(void* param)
 {
@@ -26,23 +49,23 @@ void hook(void* param)
 int32_t	main(void)
 {	
 	mlx_t* mlx;
-	mlx_set_setting(MLX_HEADLESS, true);
 
-	int width;
-	int height;
 
-	if (!(mlx = mlx_init(512, 512, "MLX42", false)))
-		return(EXIT_FAILURE);
-	mlx_get_monitor_size(0, &width, &height);
-	img = mlx_new_image(mlx, 128, 128);
-	memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	mlx_image_to_window(mlx, img, 0, 0);
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+
+	mlx = mlx_init(600, 600, "MLX42", true);
+
+
+
+	ft_image_to_window(mlx, "./textures/eye.png", 1, 1);
+	ft_image_to_window(mlx, "./textures/player.png", 2, 2);
+
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	printf("\n%d, %d\n", width, height);
 	return (EXIT_SUCCESS);
 }
 //void mlx_get_monitor_size(int32_t index, int32_t* width, int32_t* height);
 
 //gcc mini.c /Users/ael-khel/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib"
+//gcc mini.c /home/amehdikh/MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
