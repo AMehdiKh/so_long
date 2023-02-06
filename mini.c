@@ -57,7 +57,7 @@ int32_t	main(void)
 
 
 
-	ft_image_to_window(mlx, "./textures/eye.png", 1, 1);
+	ft_image_to_window(mlx, "./textures/eye1.png", 1, 1);
 	ft_image_to_window(mlx, "./textures/player.png", 2, 2);
 
 	mlx_loop_hook(mlx, &hook, mlx);

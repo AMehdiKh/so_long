@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/05 03:29:35 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:16:28 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	ft_put_image(t_mlx *mlx)
 		x = -1;
 		while (mlx->map[y][++x])
 		{
-			ft_image_to_window(mlx, "./textures/space.png", x, y);
+			ft_image_to_window(mlx, "./textures/space_grass.png", x, y);
 			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
-				ft_image_to_window(mlx, "./textures/torch.png", x, y);
+				ft_image_to_window(mlx, "./textures/torch1.png", x, y);
 			else if (mlx->map[y][x] == '1')
-				ft_image_to_window(mlx, "./textures/eye.png", x, y);
+				ft_image_to_window(mlx, "./textures/eye1.png", x, y);
 			else if (mlx->map[y][x] == 'C')
 				ft_image_to_window(mlx, "./textures/coin.png", x, y);
 			else if (mlx->map[y][x] == 'E')
