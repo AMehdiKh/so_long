@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/05 03:05:51 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:55:55 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ typedef struct s_mlx
 {
 	mlx_image_t	*img;
 	mlx_t		*win;
+	keys_t		key;
 	t_cord		p_cord[1];
+	t_cord		s_cord[1];
 	t_cord		e_cord[1];
 	char		**map;
 	int			x;
@@ -96,5 +98,9 @@ void	ft_left(t_mlx *mlx, int *x, int *y);
 void	ft_down(t_mlx *mlx, int *x, int *y);
 void	ft_up(t_mlx *mlx, int *x, int *y);
 void	ft_esc(t_mlx *mlx, int x, int y);
+
+void	ft_star_sprite(t_mlx *mlx, t_cord *s);
+void	ft_torchs(t_mlx *mlx, int x, int y);
+void	ft_animation(void *param);
 
 #endif

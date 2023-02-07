@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/05 00:31:37 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:20:36 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ void	ft_count_items(t_mlx *mlx, int x, int y)
 		++mlx->coin;
 	else if (map[y][x] == 'P')
 	{
-		mlx->p_cord->y = y;
 		mlx->p_cord->x = x;
+		mlx->p_cord->y = y;
+		mlx->s_cord->x = x;
+		mlx->s_cord->y = y;
 		++mlx->player;
 	}
 	else if (map[y][x] == 'E')

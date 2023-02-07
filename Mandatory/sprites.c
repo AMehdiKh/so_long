@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/04 23:16:47 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:32:17 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y)
 	{
 		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
-		ft_err(mlx->map, "\e[0;31mError: 7wa");
+		ft_err(mlx->map, "\e[0;31mError: Png load failed");
 	}
 	mlx->img = mlx_texture_to_image(mlx->win, png);
 	if (!mlx->img)
@@ -30,14 +30,14 @@ void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y)
 		mlx_delete_texture(png);
 		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
-		ft_err(mlx->map, "\e[0;31mError: MinilibX 7wa failed");
+		ft_err(mlx->map, "\e[0;31mError: Texture to image failed");
 	}
 	if (mlx_image_to_window(mlx->win, mlx->img, x * 72, y * 72) < 0)
 	{
 		mlx_delete_texture(png);
 		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
-		ft_err(mlx->map, "\e[0;31mError: 7wa initialization failed");
+		ft_err(mlx->map, "\e[0;31mError: putting image to the window failed");
 	}
 	mlx_delete_texture(png);
 }
@@ -50,16 +50,7 @@ void	ft_exit_sprite(t_mlx *mlx, int x, int y)
 		ft_image_to_window(mlx, "./textures/d_open.png", x, y);
 }
 
-void	ft_player_sprite(t_mlx *mlx, int x, int y)
+void	ft_star_sprite(t_mlx *mlx, t_cord *s)
 {
-	static int	star_x;
-	static int	star_y;
-
-	if (!star_x)
-	{
-		star_x = mlx->p_cord->x;
-		star_y = mlx->p_cord->y;
-	}
-	ft_image_to_window(mlx, "./textures/star.png", star_x, star_y);
-	ft_image_to_window(mlx, "./textures/player.png", x, y);
+	ft_image_to_window(mlx, "./textures/star.png", s->x, s->y);
 }
