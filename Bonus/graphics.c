@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 17:03:18 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:23:56 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	ft_mlx(t_mlx *mlx)
 
 	map = mlx->map;
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", true);
+	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", false);
 	if (!mlx->win)
 		ft_err(map, "\e[0;31mError: MinilibX initialization failed");
 	ft_put_image(mlx);
+	// mlx_key_hook(mlx->win, &ft_moves, mlx);
+	// mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop_hook(mlx->win, &ft_animation, mlx);
-	mlx_key_hook(mlx->win, &ft_moves, mlx);
-	mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop(mlx->win);
 }
 
@@ -36,28 +36,30 @@ void	ft_animation(void *param)
 
 	mlx = param;
 	x = -1;
-	// while (++x < mlx->x)
-	// {
+	while (++x < mlx->x)
+	{
 		ft_torchs(mlx, x, 0);
 		ft_torchs(mlx, x, mlx->y);
-		usleep(5000);
-	// }
+	}
 	y = -1;
-	// while (++y < mlx->y)
-	// {
+	while (++y < mlx->y)
+	{
 		ft_torchs(mlx, 0, y);
 		ft_torchs(mlx, mlx->x, y);
-		usleep(5000);
-	// }
+	}
 	printf("hhhhh");
 }
 
 void	ft_torchs(t_mlx *mlx, int x, int y)
 {
+	ft_image_to_window(mlx, "./textures/torch.png", x, y);
+	usleep(5000);
 	ft_image_to_window(mlx, "./textures/torch1.png", x, y);
+	usleep(5000);
 	ft_image_to_window(mlx, "./textures/torch2.png", x, y);
+	usleep(5000);
 	ft_image_to_window(mlx, "./textures/torch3.png", x, y);
-	ft_image_to_window(mlx, "./textures/torch4.png", x, y);
+	usleep(5000);
 }
 
 void	ft_put_image(t_mlx *mlx)

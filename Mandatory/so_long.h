@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:20:36 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:07:46 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
-# include "/home/amehdikh/MLX42/include/MLX42/MLX42.h"
+# include "/Users/ael-khel/MLX42/include/MLX42/MLX42.h"
 # include "../ft_printf/ft_printf.h"
 # include "../LibFT/libft.h"
 

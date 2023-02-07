@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 16:55:55 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:26:10 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
-# include "/home/amehdikh/MLX42/include/MLX42/MLX42.h"
+# include "/Users/ael-khel/MLX42/include/MLX42/MLX42.h"
 # include "../ft_printf/ft_printf.h"
 # include "../LibFT/libft.h"
 
@@ -88,7 +88,6 @@ void	ft_put_sprite(t_mlx *mlx, int x, int y);
 
 void	ft_exit_sprite(t_mlx *mlx, int x, int y);
 void	ft_player_sprite(t_mlx *mlx, int x, int y);
-
 
 void	ft_close(void *param);
 void	ft_moves(mlx_key_data_t keydata, void *param);

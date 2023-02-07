@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 16:23:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:13:42 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_mlx(t_mlx *mlx)
 
 	map = mlx->map;
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", true);
+	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", false);
 	if (!mlx->win)
 		ft_err(map, "\e[0;31mError: MinilibX initialization failed");
 	ft_put_image(mlx);
