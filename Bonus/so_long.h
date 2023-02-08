@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/07 20:26:10 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:56:42 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
-# include "/Users/ael-khel/MLX42/include/MLX42/MLX42.h"
+# include "/home/amehdikh/MLX42/include/MLX42/MLX42.h"
 # include "../ft_printf/ft_printf.h"
 # include "../LibFT/libft.h"
 
@@ -52,6 +52,7 @@ typedef struct s_mlx
 	t_cord		s_cord[1];
 	t_cord		e_cord[1];
 	char		**map;
+	char		str[4][22];
 	int			x;
 	int			y;
 	int			player;
@@ -60,6 +61,7 @@ typedef struct s_mlx
 	int			moves;
 	int			max_width;
 	int			max_height;
+	int			i;
 }	t_mlx;
 
 void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y);
@@ -99,7 +101,7 @@ void	ft_up(t_mlx *mlx, int *x, int *y);
 void	ft_esc(t_mlx *mlx, int x, int y);
 
 void	ft_star_sprite(t_mlx *mlx, t_cord *s);
-void	ft_torchs(t_mlx *mlx, int x, int y);
+void	ft_torchs(t_mlx *mlx, char *str);
 void	ft_animation(void *param);
 
 #endif

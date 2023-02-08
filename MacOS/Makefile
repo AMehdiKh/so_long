@@ -3,7 +3,7 @@ NAME = so_long
 ###############################################################################################################
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -MMD -fsanitize=address
 ###############################################################################################################
 M_DIR = Mandatory
 
@@ -25,7 +25,7 @@ LIBFT = ./LibFT/libft.a
 
 PRINTF = ./ft_printf/libftprintf.a
 
-LIBMLX = /home/amehdikh/MLX42/build/libmlx42.a
+LIBMLX = /Users/ael-khel/MLX42/build/libmlx42.a
 ##############################################################################################################
 .PHONY: clean
 all: $(NAME)
@@ -33,12 +33,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libasan -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libsan -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 bonus: $(BOBJS)
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libsan -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 sinclude $(M_DEP) $(B_DEP)
 

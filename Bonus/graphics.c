@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/07 20:23:56 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/08 02:03:18 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,44 +22,49 @@ void	ft_mlx(t_mlx *mlx)
 	if (!mlx->win)
 		ft_err(map, "\e[0;31mError: MinilibX initialization failed");
 	ft_put_image(mlx);
-	// mlx_key_hook(mlx->win, &ft_moves, mlx);
-	// mlx_close_hook(mlx->win, &ft_close, mlx);
+	mlx->i = 1;
+	mlx_key_hook(mlx->win, &ft_moves, mlx);
+	mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop_hook(mlx->win, &ft_animation, mlx);
 	mlx_loop(mlx->win);
 }
 
 void	ft_animation(void *param)
 {
-	t_mlx	*mlx;
+	t_mlx			*mlx;
+	static int		i;
+
+	mlx = param;
+	char	str[4][22]={
+                   "./textures/torch.png",
+                   "./textures/torch1.png",
+                   "./textures/torch2.png",
+                   "./textures/torch3.png"
+                 };
+	ft_torchs(mlx, str[i++]);
+	if (i == 4)
+		i = 0;
+}
+
+void	ft_torchs(t_mlx *mlx, char *str)
+{
 	int		x;
 	int		y;
 
-	mlx = param;
 	x = -1;
 	while (++x < mlx->x)
 	{
-		ft_torchs(mlx, x, 0);
-		ft_torchs(mlx, x, mlx->y);
+		ft_image_to_window(mlx, str, x, 0);
+		ft_image_to_window(mlx, str, x, mlx->y - 1);
+		mlx_delete_image(mlx->win, mlx->img);
 	}
 	y = -1;
 	while (++y < mlx->y)
 	{
-		ft_torchs(mlx, 0, y);
-		ft_torchs(mlx, mlx->x, y);
+		ft_image_to_window(mlx, str, 0, y);
+		ft_image_to_window(mlx, str, mlx->x - 1, y);
+		mlx_delete_image(mlx->win, mlx->img);
 	}
-	printf("hhhhh");
-}
-
-void	ft_torchs(t_mlx *mlx, int x, int y)
-{
-	ft_image_to_window(mlx, "./textures/torch.png", x, y);
-	usleep(5000);
-	ft_image_to_window(mlx, "./textures/torch1.png", x, y);
-	usleep(5000);
-	ft_image_to_window(mlx, "./textures/torch2.png", x, y);
-	usleep(5000);
-	ft_image_to_window(mlx, "./textures/torch3.png", x, y);
-	usleep(5000);
 }
 
 void	ft_put_image(t_mlx *mlx)
