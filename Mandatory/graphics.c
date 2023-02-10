@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/07 20:13:42 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 03:00:45 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,25 @@ void	ft_mlx(t_mlx *mlx)
 	char	**map;
 
 	map = mlx->map;
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", false);
 	if (!mlx->win)
 		ft_err(map, "\e[0;31mError: MinilibX initialization failed");
-	ft_put_image(mlx);
+	mlx->img = mlx_new_image(mlx->win, 72 * mlx->x, 72 * mlx->y);
+	if (!mlx->img)
+	{
+		mlx_terminate(mlx->win);
+		ft_err(map, "\e[0;31mError: Creating new image failed");
+	}
+	if (mlx_image_to_window(mlx->win, mlx->img, 0, 0) < 0)
+	{
+		mlx_delete_image(mlx->win, mlx->img);
+		mlx_terminate(mlx->win);
+		ft_err(map, "\e[0;31mError: Putting image to window failed");
+	}
+	ft_put_sprite(mlx);
 	mlx_key_hook(mlx->win, &ft_moves, mlx);
 	mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop(mlx->win);
-}
-
-void	ft_put_image(t_mlx *mlx)
-{
-	int	x;
-	int	y;
-
-	y = -1;
-	while (mlx->map[++y])
-	{
-		x = -1;
-		while (mlx->map[y][++x])
-		{
-			ft_image_to_window(mlx, "./textures/space_grass.png", x, y);
-			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
-				ft_image_to_window(mlx, "./textures/torch.png", x, y);
-			else if (mlx->map[y][x] == '1')
-				ft_image_to_window(mlx, "./textures/eye.png", x, y);
-			else if (mlx->map[y][x] == 'C')
-				ft_image_to_window(mlx, "./textures/coin.png", x, y);
-			else if (mlx->map[y][x] == 'E')
-				ft_exit_sprite(mlx, x, y);
-			else if (mlx->map[y][x] == 'P')
-			{
-				ft_star_sprite(mlx, mlx->s_cord);
-				ft_image_to_window(mlx, "./textures/player_right.png", x, y);
-			}
-		}
-	}
 }
 
 void	ft_moves(mlx_key_data_t keydata, void *param)

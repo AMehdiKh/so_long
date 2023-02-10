@@ -6,14 +6,40 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 16:32:17 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 02:56:53 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	ft_put_sprite(t_mlx *mlx)
+{
+	int	x;
+	int	y;
 
-void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y)
+	y = -1;
+	while (mlx->map[++y])
+	{
+		x = -1;
+		while (mlx->map[y][++x])
+		{
+			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
+				ft_draw_image(mlx, "./textures/torch0.png", x, y);
+			else if (mlx->map[y][x] == '0')
+				ft_draw_image(mlx, "./textures/space_grass.png", x, y);
+			else if (mlx->map[y][x] == 'P')
+				ft_draw_image(mlx, "./textures/star_right.png", x, y);
+			else if (mlx->map[y][x] == 'E')
+				ft_draw_image(mlx, "./textures/d_closed.png", x, y);
+			else if (mlx->map[y][x] == 'C')
+				ft_draw_image(mlx, "./textures/coin.png", x, y);
+			else if (mlx->map[y][x] == '1')
+				ft_draw_image(mlx, "./textures/eye.png", x, y);
+		}
+	}
+}
+
+void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y)
 {
 	mlx_texture_t	*png;
 
@@ -24,33 +50,63 @@ void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y)
 		mlx_terminate(mlx->win);
 		ft_err(mlx->map, "\e[0;31mError: Png load failed");
 	}
-	mlx->img = mlx_texture_to_image(mlx->win, png);
-	if (!mlx->img)
+	if (!mlx_draw_texture(mlx->img, png, x * 72, y * 72))
 	{
 		mlx_delete_texture(png);
 		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
-		ft_err(mlx->map, "\e[0;31mError: Texture to image failed");
-	}
-	if (mlx_image_to_window(mlx->win, mlx->img, x * 72, y * 72) < 0)
-	{
-		mlx_delete_texture(png);
-		mlx_delete_image(mlx->win, mlx->img);
-		mlx_terminate(mlx->win);
-		ft_err(mlx->map, "\e[0;31mError: putting image to the window failed");
+		ft_err(mlx->map, "\e[0;31mError: drawing texture to the image failed");
 	}
 	mlx_delete_texture(png);
 }
 
-void	ft_exit_sprite(t_mlx *mlx, int x, int y)
+int	ft_exit_sprite(t_mlx *mlx, t_cord *e)
 {
 	if (mlx->coin)
-		ft_image_to_window(mlx, "./textures/d_closed.png", x, y);
+	{
+		if (e->x == mlx->p_cord->x && e->y == mlx->p_cord->y)
+		{
+			if (mlx->key == MLX_KEY_LEFT)
+				ft_draw_image(mlx, "./textures/dc_left.png", e->x, e->y);
+			else
+				ft_draw_image(mlx, "./textures/dc_right.png", e->x, e->y);
+			return (0);
+		}
+		else
+			ft_draw_image(mlx, "./textures/d_closed.png", e->x, e->y);
+	}
 	else
-		ft_image_to_window(mlx, "./textures/d_open.png", x, y);
+		ft_draw_image(mlx, "./textures/d_open.png", e->x, e->y);
+	return (1);
 }
 
-void	ft_star_sprite(t_mlx *mlx, t_cord *s)
+int	ft_star_sprite(t_mlx *mlx, t_cord *s)
 {
-	ft_image_to_window(mlx, "./textures/star.png", s->x, s->y);
+	if (s->x == mlx->p_cord->x && s->y == mlx->p_cord->y)
+	{
+		if (mlx->key == MLX_KEY_LEFT)
+			ft_draw_image(mlx, "./textures/star_left.png", s->x, s->y);
+		else
+			ft_draw_image(mlx, "./textures/star_right.png", s->x, s->y);
+		return (0);
+	}
+	else
+		ft_draw_image(mlx, "./textures/star.png", s->x, s->y);
+	return (1);
+}
+
+void	ft_player_sprite(t_mlx *mlx, t_cord *p)
+{
+	int	star;
+	int	exit;
+
+	star = ft_star_sprite(mlx, mlx->s_cord);
+	exit = ft_exit_sprite(mlx, mlx->e_cord);
+	if (star && exit)
+	{
+		if (mlx->key == MLX_KEY_LEFT)
+			ft_draw_image(mlx, "./textures/player_left.png", p->x, p->y);
+		else
+			ft_draw_image(mlx, "./textures/player_right.png", p->x, p->y);
+	}
 }

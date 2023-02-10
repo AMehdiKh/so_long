@@ -7,7 +7,7 @@
 
 static mlx_image_t* img;
 
-void	ft_image_to_window(mlx_t *mlx, char *png_path, int x, int y)
+void	ft_draw_image(mlx_t *mlx, char *png_path, int x, int y)
 {
 	mlx_texture_t	*png;
 
@@ -48,8 +48,8 @@ int32_t	main(void)
 	img = mlx_new_image(mlx, 600, 600);
 	memset(img->pixels, 255, img->width * img->height * sizeof(int));
 	mlx_image_to_window(mlx, img, 0, 0);
-	ft_image_to_window(mlx, "./textures/space_grass.png", 1, 1);
-	ft_image_to_window(mlx, "./textures/eye.png", 1, 1);
+	ft_draw_image(mlx, "./textures/space_grass.png", 1, 1);
+	ft_draw_image(mlx, "./textures/eye.png", 1, 1);
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);

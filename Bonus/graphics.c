@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:09:05 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_mlx(t_mlx *mlx)
 		mlx_terminate(mlx->win);
 		ft_err(map, "\e[0;31mError: Putting image to window failed");
 	}
-	ft_put_image(mlx);
+	ft_put_sprite(mlx);
 	mlx_key_hook(mlx->win, &ft_moves, mlx);
 	mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop_hook(mlx->win, &ft_animation, mlx);
@@ -58,7 +58,7 @@ void	ft_animation(void *param)
 			i = 0;
 	}
 	if (mlx->coin)
-	++j;
+		++j;
 	if (!mlx->coin && j)
 	{
 		ft_torches(mlx, "./textures/torch4.png");
@@ -74,18 +74,18 @@ void	ft_torches(t_mlx *mlx, char *str)
 	x = -1;
 	while (++x < mlx->x)
 	{
-		ft_image_to_window(mlx, str, x, 0);
-		ft_image_to_window(mlx, str, x, mlx->y - 1);
+		ft_draw_image(mlx, str, x, 0);
+		ft_draw_image(mlx, str, x, mlx->y - 1);
 	}
 	y = -1;
 	while (++y < mlx->y)
 	{
-		ft_image_to_window(mlx, str, 0, y);
-		ft_image_to_window(mlx, str, mlx->x - 1, y);
+		ft_draw_image(mlx, str, 0, y);
+		ft_draw_image(mlx, str, mlx->x - 1, y);
 	}
 }
 
-void	ft_put_image(t_mlx *mlx)
+void	ft_put_sprite(t_mlx *mlx)
 {
 	int	x;
 	int	y;
@@ -97,15 +97,15 @@ void	ft_put_image(t_mlx *mlx)
 		while (mlx->map[y][++x])
 		{
 			if (mlx->map[y][x] == '0')
-				ft_image_to_window(mlx, "./textures/space_grass.png", x, y);
+				ft_draw_image(mlx, "./textures/space_grass.png", x, y);
 			else if (mlx->map[y][x] == 'P')
-				ft_image_to_window(mlx, "./textures/star_right.png", x, y);
+				ft_draw_image(mlx, "./textures/star_right.png", x, y);
 			else if (mlx->map[y][x] == 'E')
-				ft_image_to_window(mlx, "./textures/d_closed.png", x, y);
+				ft_draw_image(mlx, "./textures/d_closed.png", x, y);
 			else if (mlx->map[y][x] == 'C')
-				ft_image_to_window(mlx, "./textures/coin.png", x, y);
+				ft_draw_image(mlx, "./textures/coin.png", x, y);
 			else if (mlx->map[y][x] == '1')
-				ft_image_to_window(mlx, "./textures/eye.png", x, y);
+				ft_draw_image(mlx, "./textures/eye.png", x, y);
 		}
 	}
 }

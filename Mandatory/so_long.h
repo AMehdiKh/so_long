@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/08 00:23:33 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_mlx
 	int			max_height;
 }	t_mlx;
 
-void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y);
+void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
 
 char	**ft_parse(char *map_name);
 char	*ft_line(int fd);
@@ -83,22 +83,19 @@ void	ft_err(char **map, char *str);
 void	ft_clear(void **ptr);
 
 void	ft_mlx(t_mlx *mlx);
-void	ft_put_image(t_mlx *mlx);
-void	ft_put_sprite(t_mlx *mlx, int x, int y);
+void	ft_put_sprite(t_mlx *mlx);
 
-void	ft_exit_sprite(t_mlx *mlx, int x, int y);
-void	ft_player_sprite(t_mlx *mlx, int x, int y);
+void	ft_player_sprite(t_mlx *mlx, t_cord *p);
+int		ft_exit_sprite(t_mlx *mlx, t_cord *e);
+int		ft_star_sprite(t_mlx *mlx, t_cord *s);
 
-
-void	ft_close(void *param);
 void	ft_moves(mlx_key_data_t keydata, void *param);
+void	ft_close(void *param);
 
 void	ft_right(t_mlx *mlx, int *x, int *y);
 void	ft_left(t_mlx *mlx, int *x, int *y);
 void	ft_down(t_mlx *mlx, int *x, int *y);
 void	ft_up(t_mlx *mlx, int *x, int *y);
 void	ft_esc(t_mlx *mlx, int x, int y);
-
-void	ft_star_sprite(t_mlx *mlx, t_cord *s);
 
 #endif

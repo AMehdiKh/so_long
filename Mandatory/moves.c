@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:20:36 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,40 @@
 void	ft_right(t_mlx *mlx, int *x, int *y)
 {
 	if (mlx->map[*y][*x + 1] == '1')
+	{
+		ft_player_sprite(mlx, mlx->p_cord);
 		return ;
+	}
 	if (mlx->map[*y][*x + 1] == 'C')
 	{
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x + 1, *y);
 		mlx->map[*y][*x + 1] = '0';
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x, *y);
-	ft_exit_sprite(mlx, mlx->e_cord->x, mlx->e_cord->y);
-	ft_star_sprite(mlx, mlx->s_cord);
-	ft_image_to_window(mlx, "./textures/player_right.png", ++*x, *y);
-	mlx->p_cord->x = *x;
+		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+	mlx->p_cord->x = ++*x;
+	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 }
 
 void	ft_left(t_mlx *mlx, int *x, int *y)
 {
 	if (mlx->map[*y][*x - 1] == '1')
+	{
+		ft_player_sprite(mlx, mlx->p_cord);
 		return ;
+	}
 	if (mlx->map[*y][*x - 1] == 'C')
 	{
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x - 1, *y);
 		mlx->map[*y][*x - 1] = '0';
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x, *y);
-	ft_exit_sprite(mlx, mlx->e_cord->x, mlx->e_cord->y);
-	ft_star_sprite(mlx, mlx->s_cord);
-	ft_image_to_window(mlx, "./textures/player_left.png", --*x, *y);
-	mlx->p_cord->x = *x;
+		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+	mlx->p_cord->x = --*x;
+	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 }
-
 
 void	ft_down(t_mlx *mlx, int *x, int *y)
 {
@@ -57,19 +56,13 @@ void	ft_down(t_mlx *mlx, int *x, int *y)
 		return ;
 	if (mlx->map[*y + 1][*x] == 'C')
 	{
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x, *y + 1);
 		mlx->map[*y + 1][*x] = '0';
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x, *y);
-	ft_exit_sprite(mlx, mlx->e_cord->x, mlx->e_cord->y);
-	ft_star_sprite(mlx, mlx->s_cord);
-	if (mlx->key == MLX_KEY_RIGHT)
-		ft_image_to_window(mlx, "./textures/player_right.png", *x, ++*y);
-	else
-		ft_image_to_window(mlx, "./textures/player_left.png", *x, ++*y);
-	mlx->p_cord->y = *y;
+		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+	mlx->p_cord->y = ++*y;
+	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 }
 
@@ -79,19 +72,13 @@ void	ft_up(t_mlx *mlx, int *x, int *y)
 		return ;
 	if (mlx->map[*y - 1][*x] == 'C')
 	{
-		mlx->map[*y + 1][*x] = '0';
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x, *y - 1);
+		mlx->map[*y - 1][*x] = '0';
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_image_to_window(mlx, "./textures/space_grass.png", *x, *y);
-	ft_exit_sprite(mlx, mlx->e_cord->x, mlx->e_cord->y);
-	ft_star_sprite(mlx, mlx->s_cord);
-	if (mlx->key == MLX_KEY_RIGHT)
-		ft_image_to_window(mlx, "./textures/player_right.png", *x, --*y);
-	else
-		ft_image_to_window(mlx, "./textures/player_left.png", *x, --*y);
-	mlx->p_cord->y = *y;
+		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+	mlx->p_cord->y = --*y;
+	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
 }
 
@@ -101,7 +88,7 @@ void	ft_esc(t_mlx *mlx, int x, int y)
 	int		i;
 
 	win_msg = NULL;
-	if ((y == mlx->e_cord->y && x == mlx->e_cord->x) && !mlx->coin)
+	if ((x == mlx->e_cord->x && y == mlx->e_cord->y) && !mlx->coin)
 	{
 		i = 12;
 		win_msg = ft_parse("Mandatory/win_msg.c");

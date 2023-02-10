@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 00:58:26 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 03:04:29 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_mlx
 	int			max_height;
 }	t_mlx;
 
-void	ft_image_to_window(t_mlx *mlx, char *png_path, int x, int y);
+void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
 
 char	**ft_parse(char *map_name);
 char	*ft_line(int fd);
@@ -83,8 +83,7 @@ void	ft_err(char **map, char *str);
 void	ft_clear(void **ptr);
 
 void	ft_mlx(t_mlx *mlx);
-void	ft_put_image(t_mlx *mlx);
-void	ft_put_sprite(t_mlx *mlx, int x, int y);
+void	ft_put_sprite(t_mlx *mlx);
 
 void	ft_player_sprite(t_mlx *mlx, t_cord *p);
 int		ft_exit_sprite(t_mlx *mlx, t_cord *e);

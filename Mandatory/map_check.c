@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/06 14:20:36 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/10 02:53:19 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ void	ft_count_items(t_mlx *mlx, int x, int y)
 		++mlx->exit;
 	}
 }
-
-
 
 bool	**ft_visited(t_mlx *mlx)
 {
