@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/05 01:53:09 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/09 23:17:31 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_bfs(t_mlx *mlx)
 	valid_exit = 0;
 	ft_bzero(queue, sizeof(t_queue));
 	queue->visited = ft_visited(mlx);
-	ft_enqueue(queue, mlx->map, mlx->p_cord->y, mlx->p_cord->x);
+	ft_enqueue(queue, mlx->map, mlx->p_cord->x, mlx->p_cord->y);
 	while (queue->size)
 	{
 		ft_isvalid(queue, mlx->map);

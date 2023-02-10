@@ -18,16 +18,10 @@ void	ft_image_to_window(mlx_t *mlx, char *png_path, int x, int y)
 		mlx_terminate(mlx);
 		printf("l7wa");
 	}
-	img = mlx_texture_to_image(mlx, png);
-	if (!img)
-	{
+	if (!mlx_draw_texture(img, png, x * 72, y * 72))
 		mlx_delete_texture(png);
-		mlx_delete_image(mlx, img);
-		mlx_terminate(mlx);
-		printf("zbi");
-	}
-	printf("\n%d\n", mlx_image_to_window(mlx, img, x * 72, y * 72));
-	mlx_delete_texture(png);
+
+	// mlx_delete_texture(png);
 }
 
 void hook(void* param)
@@ -50,15 +44,12 @@ int32_t	main(void)
 {	
 	mlx_t* mlx;
 
-
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-
 	mlx = mlx_init(600, 600, "MLX42", true);
-
-
-
-	ft_image_to_window(mlx, "./textures/eye1.png", 1, 1);
-	ft_image_to_window(mlx, "./textures/player.png", 2, 2);
+	img = mlx_new_image(mlx, 600, 600);
+	memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	mlx_image_to_window(mlx, img, 0, 0);
+	ft_image_to_window(mlx, "./textures/space_grass.png", 1, 1);
+	ft_image_to_window(mlx, "./textures/eye.png", 1, 1);
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
