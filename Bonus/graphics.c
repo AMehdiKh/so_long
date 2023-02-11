@@ -6,82 +6,39 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 12:05:40 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_mlx(t_mlx *mlx)
+void	ft_graphics(t_mlx *mlx)
 {
-	char	**map;
-
-	map = mlx->map;
-	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", false);
-	if (!mlx->win)
-		ft_err(map, "\e[0;31mError: MinilibX initialization failed");
-	mlx->img = mlx_new_image(mlx->win, 72 * mlx->x, 72 * mlx->y);
-	if (!mlx->img)
-	{
-		mlx_terminate(mlx->win);
-		ft_err(map, "\e[0;31mError: Creating new image failed");
-	}
-	if (mlx_image_to_window(mlx->win, mlx->img, 0, 0) < 0)
-	{
-		mlx_delete_image(mlx->win, mlx->img);
-		mlx_terminate(mlx->win);
-		ft_err(map, "\e[0;31mError: Putting image to window failed");
-	}
+	mlx->mid_map = mlx->x / 2;
+	mlx->str_x = (72 * mlx->mid_map) + 32;
+	ft_mlx_init(mlx, mlx->x * 72, mlx->y * 72);
 	ft_put_sprite(mlx);
-	mlx_key_hook(mlx->win, &ft_moves, mlx);
+	mlx_key_hook(mlx->win, &ft_hooks, mlx);
 	mlx_close_hook(mlx->win, &ft_close, mlx);
-	mlx_loop_hook(mlx->win, &ft_animation, mlx);
+	mlx_loop_hook(mlx->win, &ft_loop, mlx);
 	mlx_loop(mlx->win);
 }
 
-void	ft_animation(void *param)
+void	ft_mlx_init(t_mlx *mlx, int x, int y)
 {
-	t_mlx			*mlx;
-	static char		*str[4];
-	static int		i;
-	static int		j;
-
-	mlx = param;
-	if (mlx->coin && j % 7 == 0)
+	mlx->win = mlx_init(x, y, "Inferno", false);
+	if (!mlx->win)
+		ft_err(mlx->map, "\e[0;31mError: MinilibX initialization failed");
+	mlx->img = mlx_new_image(mlx->win, x, y);
+	if (!mlx->img)
 	{
-		str[0] = "./textures/torch0.png";
-		str[1] = "./textures/torch1.png";
-		str[2] = "./textures/torch2.png";
-		str[3] = "./textures/torch3.png";
-		ft_torches(mlx, str[i++]);
-		if (i == 4)
-			i = 0;
+		mlx_terminate(mlx->win);
+		ft_err(mlx->map, "\e[0;31mError: Creating new image failed");
 	}
-	if (mlx->coin)
-		++j;
-	if (!mlx->coin && j)
+	if (mlx_image_to_window(mlx->win, mlx->img, 0, 0) < 0)
 	{
-		ft_torches(mlx, "./textures/torch4.png");
-		j = 0;
-	}
-}
-
-void	ft_torches(t_mlx *mlx, char *str)
-{
-	int		x;
-	int		y;
-
-	x = -1;
-	while (++x < mlx->x)
-	{
-		ft_draw_image(mlx, str, x, 0);
-		ft_draw_image(mlx, str, x, mlx->y - 1);
-	}
-	y = -1;
-	while (++y < mlx->y)
-	{
-		ft_draw_image(mlx, str, 0, y);
-		ft_draw_image(mlx, str, mlx->x - 1, y);
+		mlx_terminate(mlx->win);
+		ft_err(mlx->map, "\e[0;31mError: Putting image to window failed");
 	}
 }
 
@@ -97,7 +54,7 @@ void	ft_put_sprite(t_mlx *mlx)
 		while (mlx->map[y][++x])
 		{
 			if (mlx->map[y][x] == '0')
-				ft_draw_image(mlx, "./textures/space_grass.png", x, y);
+				ft_draw_image(mlx, "./textures/space.png", x, y);
 			else if (mlx->map[y][x] == 'P')
 				ft_draw_image(mlx, "./textures/star_right.png", x, y);
 			else if (mlx->map[y][x] == 'E')
@@ -110,11 +67,11 @@ void	ft_put_sprite(t_mlx *mlx)
 	}
 }
 
-void	ft_moves(mlx_key_data_t keydata, void *param)
+void	ft_hooks(mlx_key_data_t keydata, void *param)
 {
-	t_mlx		*mlx;
-	int			x;
-	int			y;
+	t_mlx	*mlx;
+	int		x;
+	int		y;
 
 	mlx = param;
 	x = mlx->p_cord->x;
@@ -137,7 +94,14 @@ void	ft_moves(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void	ft_close(void *param)
+void	ft_loop(void *param)
 {
-	ft_esc(param, 0, 0);
+	t_mlx	*mlx;
+
+	mlx = param;
+	ft_animation(mlx);
+	if (mlx->moves != mlx->last_move)
+		ft_moves_str(mlx);
+	if (mlx->coin != mlx->last_coin)
+		ft_coins_str(mlx);
 }

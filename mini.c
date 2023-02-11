@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
-#include "/home/amehdikh/MLX42/include/MLX42/MLX42.h"
+#include "./MLX42/include/MLX42/MLX42.h"
 #define WIDTH 512
 #define HEIGHT 512
 
@@ -21,7 +21,7 @@ void	ft_draw_image(mlx_t *mlx, char *png_path, int x, int y)
 	if (!mlx_draw_texture(img, png, x * 72, y * 72))
 		mlx_delete_texture(png);
 
-	// mlx_delete_texture(png);
+	mlx_delete_texture(png);
 }
 
 void hook(void* param)
@@ -46,10 +46,11 @@ int32_t	main(void)
 
 	mlx = mlx_init(600, 600, "MLX42", true);
 	img = mlx_new_image(mlx, 600, 600);
-	memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	memset(img->pixels, 115, img->width * img->height * sizeof(int));
 	mlx_image_to_window(mlx, img, 0, 0);
-	ft_draw_image(mlx, "./textures/space_grass.png", 1, 1);
-	ft_draw_image(mlx, "./textures/eye.png", 1, 1);
+	// ft_draw_image(mlx, "./textures/space.png", 1, 1);
+	ft_draw_image(mlx, "./textures/moves.png", 0, 0);
+	mlx_put_string(mlx, "55555",12, 38);
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
@@ -59,4 +60,6 @@ int32_t	main(void)
 //void mlx_get_monitor_size(int32_t index, int32_t* width, int32_t* height);
 
 //gcc mini.c /Users/ael-khel/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib"
-//gcc mini.c /home/amehdikh/MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
+//gcc mini.c ./MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
+//	mlx_put_string(mlx, "9",32, 38);
+// mlx_put_string(mlx, "99",27, 38);

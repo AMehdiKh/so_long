@@ -6,13 +6,13 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 03:00:45 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 08:13:31 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_mlx(t_mlx *mlx)
+void	ft_graphics(t_mlx *mlx)
 {
 	char	**map;
 
@@ -33,12 +33,12 @@ void	ft_mlx(t_mlx *mlx)
 		ft_err(map, "\e[0;31mError: Putting image to window failed");
 	}
 	ft_put_sprite(mlx);
-	mlx_key_hook(mlx->win, &ft_moves, mlx);
+	mlx_key_hook(mlx->win, &ft_hooks, mlx);
 	mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop(mlx->win);
 }
 
-void	ft_moves(mlx_key_data_t keydata, void *param)
+void	ft_hooks(mlx_key_data_t keydata, void *param)
 {
 	t_mlx		*mlx;
 	int			x;

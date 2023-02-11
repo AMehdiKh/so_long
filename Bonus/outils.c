@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:51:37 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/04 23:16:47 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 07:33:57 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	ft_clear(void **ptr)
 	free(ptr);
 }
 
-void	ft_err(char **map, char *str)
+void	ft_err(char **ptr, char *str)
 {
-	if (map)
-		ft_clear((void **)map);
+	if (ptr)
+		ft_clear((void **)ptr);
 	if (errno)
 		perror("\e[0;31mError ");
 	if (str)

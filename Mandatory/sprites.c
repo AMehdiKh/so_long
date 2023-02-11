@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:56:53 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 11:30:38 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_put_sprite(t_mlx *mlx)
 			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
 				ft_draw_image(mlx, "./textures/torch0.png", x, y);
 			else if (mlx->map[y][x] == '0')
-				ft_draw_image(mlx, "./textures/space_grass.png", x, y);
+				ft_draw_image(mlx, "./textures/space.png", x, y);
 			else if (mlx->map[y][x] == 'P')
 				ft_draw_image(mlx, "./textures/star_right.png", x, y);
 			else if (mlx->map[y][x] == 'E')

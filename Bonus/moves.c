@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 12:23:32 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	ft_right(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->x = ++*x;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	++mlx->moves;
 }
 
 void	ft_left(t_mlx *mlx, int *x, int *y)
@@ -44,10 +44,10 @@ void	ft_left(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->x = --*x;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	++mlx->moves;
 }
 
 void	ft_down(t_mlx *mlx, int *x, int *y)
@@ -60,10 +60,10 @@ void	ft_down(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->y = ++*y;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	++mlx->moves;
 }
 
 void	ft_up(t_mlx *mlx, int *x, int *y)
@@ -76,28 +76,30 @@ void	ft_up(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->y = --*y;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	++mlx->moves;
 }
 
 void	ft_esc(t_mlx *mlx, int x, int y)
 {
-	char	**win_msg;
-	int		i;
-
-	win_msg = NULL;
 	if ((x == mlx->e_cord->x && y == mlx->e_cord->y) && !mlx->coin)
 	{
-		i = 12;
-		win_msg = ft_parse("Mandatory/win_msg.c");
-		while (i < 20)
-			ft_printf("\e[0;32m%s\n", win_msg[i++]);
+		mlx_terminate(mlx->win);
+		ft_mlx_init(mlx, 816, 624);
+		ft_draw_image(mlx, "./textures/go_win.png", 0, 0);
+		mlx_key_hook(mlx->win, &ft_close_key, mlx);
+		mlx_close_hook(mlx->win, &ft_close, mlx);
+		mlx_loop(mlx->win);
 	}
-	mlx_delete_image(mlx->win, mlx->img);
 	mlx_terminate(mlx->win);
 	ft_clear((void **)mlx->map);
-	ft_clear((void **)win_msg);
 	exit(EXIT_SUCCESS);
+}
+
+void	ft_close_key(mlx_key_data_t keydata, void *param)
+{
+	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
+		ft_esc(param, 0, 0);
 }

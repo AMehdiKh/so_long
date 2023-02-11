@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 11:30:38 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_right(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->x = ++*x;
 	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
@@ -44,7 +44,7 @@ void	ft_left(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->x = --*x;
 	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
@@ -60,7 +60,7 @@ void	ft_down(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->y = ++*y;
 	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
@@ -76,7 +76,7 @@ void	ft_up(t_mlx *mlx, int *x, int *y)
 		--mlx->coin;
 	}
 	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space_grass.png", *x, *y);
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->y = --*y;
 	ft_player_sprite(mlx, mlx->p_cord);
 	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);

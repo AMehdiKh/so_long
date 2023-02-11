@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 03:04:29 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 12:23:52 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
-# include "/home/amehdikh/MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "../ft_printf/ft_printf.h"
 # include "../LibFT/libft.h"
 
@@ -46,6 +46,8 @@ typedef struct s_queue
 typedef struct s_mlx
 {
 	mlx_image_t	*img;
+	mlx_image_t	*moves_img;
+	mlx_image_t	*coins_img;
 	mlx_t		*win;
 	keys_t		key;
 	t_cord		p_cord[1];
@@ -58,11 +60,20 @@ typedef struct s_mlx
 	int			coin;
 	int			exit;
 	int			moves;
+	int			last_move;
+	int			last_coin;
+	int			mid_map;
+	int			str_x;
 	int			max_width;
 	int			max_height;
 }	t_mlx;
 
 void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
+void	ft_moves_str(t_mlx *mlx);
+void	ft_mlx_init(t_mlx *mlx, int x, int y);
+void	ft_coins_str(t_mlx *mlx);
+void	ft_check_arg(t_mlx *mlx, int ac, char *av);
+void	ft_close_key(mlx_key_data_t keydata, void *param);
 
 char	**ft_parse(char *map_name);
 char	*ft_line(int fd);
@@ -79,10 +90,10 @@ void	ft_dequeue(t_queue *queue);
 void	ft_isvalid(t_queue *queue, char **map);
 void	ft_bfs(t_mlx *mlx);
 
-void	ft_err(char **map, char *str);
+void	ft_err(char **ptr, char *str);
 void	ft_clear(void **ptr);
 
-void	ft_mlx(t_mlx *mlx);
+void	ft_graphics(t_mlx *mlx);
 void	ft_put_sprite(t_mlx *mlx);
 
 void	ft_player_sprite(t_mlx *mlx, t_cord *p);
@@ -90,7 +101,7 @@ int		ft_exit_sprite(t_mlx *mlx, t_cord *e);
 int		ft_star_sprite(t_mlx *mlx, t_cord *s);
 
 void	ft_close(void *param);
-void	ft_moves(mlx_key_data_t keydata, void *param);
+void	ft_hooks(mlx_key_data_t keydata, void *param);
 
 void	ft_right(t_mlx *mlx, int *x, int *y);
 void	ft_left(t_mlx *mlx, int *x, int *y);
@@ -99,6 +110,8 @@ void	ft_up(t_mlx *mlx, int *x, int *y);
 void	ft_esc(t_mlx *mlx, int x, int y);
 
 void	ft_torches(t_mlx *mlx, char *str);
-void	ft_animation(void *param);
+void	ft_loop(void *param);
+void	ft_animation(t_mlx *mlx);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:49:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/11 11:28:17 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y)
 	png = mlx_load_png(png_path);
 	if (!png)
 	{
-		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
 		ft_err(mlx->map, "\e[0;31mError: Png load failed");
 	}
 	if (!mlx_draw_texture(mlx->img, png, x * 72, y * 72))
 	{
 		mlx_delete_texture(png);
-		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
 		ft_err(mlx->map, "\e[0;31mError: drawing texture to the image failed");
 	}

@@ -15,7 +15,7 @@ M_DEP = ${OBJS:.o=.d}
 ##############################################################################################################
 B_DIR = Bonus
 
-BSRCS = main.c map_check.c valid_path.c outils.c graphics.c sprites.c moves.c
+BSRCS = main.c map_check.c valid_path.c outils.c graphics.c sprites.c moves.c itoa.c loop.c
 
 BOBJS = ${BSRCS:%.c=$(B_DIR)/%.o}
 
@@ -25,7 +25,7 @@ LIBFT = ./LibFT/libft.a
 
 PRINTF = ./ft_printf/libftprintf.a
 
-LIBMLX = /home/amehdikh/MLX42/build/libmlx42.a
+LIBMLX = ./MLX42/build/libmlx42.a
 ##############################################################################################################
 .PHONY: clean
 all: $(NAME)
