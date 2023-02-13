@@ -1,3 +1,0 @@
-/home/amehdikh/Desktop/solong/MLX42/build/CMakeFiles/mlx42.dir
-/home/amehdikh/Desktop/solong/MLX42/build/CMakeFiles/edit_cache.dir
-/home/amehdikh/Desktop/solong/MLX42/build/CMakeFiles/rebuild_cache.dir

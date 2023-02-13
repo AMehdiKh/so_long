@@ -15,9 +15,9 @@ M_DEP = ${OBJS:.o=.d}
 ##############################################################################################################
 B_DIR = Bonus
 
-BSRCS = main.c map_check.c valid_path.c outils.c graphics.c sprites.c moves.c
+BSRCS = main.c map_check.c valid_path.c outils.c graphics.c sprites.c moves.c itoa.c loop.c
 
-BOBJS = ${BSRCS:%.c=$(M_DIR)/%.o}
+BOBJS = ${BSRCS:%.c=$(B_DIR)/%.o}
 
 B_DEP = ${BOBJS:.o=.d}
 ##############################################################################################################
@@ -25,20 +25,20 @@ LIBFT = ./LibFT/libft.a
 
 PRINTF = ./ft_printf/libftprintf.a
 
-LIBMLX = /home/amehdikh/MLX42/build/libmlx42.a
+LIBMLX = ./MLX42/build/libmlx42.a
 ##############################################################################################################
 .PHONY: clean
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
 	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libasan -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
 
-bonus: $(OBJS)
+bonus: $(BOBJS)
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libasan -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
 
 sinclude $(M_DEP) $(B_DEP)
 

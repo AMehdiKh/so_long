@@ -33,12 +33,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libsan -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libsan -Iinclude -lglfw3 -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 bonus: $(BOBJS)
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libsan -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libsan -Iinclude -lglfw3 -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 sinclude $(M_DEP) $(B_DEP)
 
