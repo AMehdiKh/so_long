@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/13 16:24:31 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:18:45 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,15 @@ void	map_check(t_mlx *mlx)
 	{
 		mlx->x = -1;
 		while (map[mlx->y][++mlx->x])
+		{
+			if (!ft_strchr("10PCEX", map[mlx->y][mlx->x]))
+				ft_err(map, "\e[0;31mError: The map has invalid characters");
+			if (mlx->y == 0 || !(map[mlx->y + 1]) || mlx->x == 0
+				|| !(map[mlx->y][mlx->x + 1]))
+				if (map[mlx->y][mlx->x] != '1')
+					ft_err(map, "\e[0;31mError: The map is not surrounded by 1");
 			ft_count_items(mlx, mlx->x, mlx->y);
+		}
 		if (map[++mlx->y])
 			if (mlx->x != (int)ft_strlen(map[mlx->y]))
 				ft_err(map, "\e[0;31mError: The map is not rectangular");
@@ -37,11 +45,6 @@ void	ft_count_items(t_mlx *mlx, int x, int y)
 	char	**map;
 
 	map = mlx->map;
-	if (!ft_strchr("10PCE", map[y][x]))
-		ft_err(map, "\e[0;31mError: The map has invalid characters");
-	if (y == 0 || !(map[y + 1]) || x == 0 || !(map[y][x + 1]))
-		if (map[y][x] != '1')
-			ft_err(map, "\e[0;31mError: The map is not surrounded by 1");
 	if (map[y][x] == 'C')
 		++mlx->coin;
 	else if (map[y][x] == 'P')
@@ -54,9 +57,15 @@ void	ft_count_items(t_mlx *mlx, int x, int y)
 	}
 	else if (map[y][x] == 'E')
 	{
-		mlx->e_cord->y = y;
 		mlx->e_cord->x = x;
+		mlx->e_cord->y = y;
 		++mlx->exit;
+	}
+	else if (map[y][x] == 'X')
+	{
+		mlx->x_cord->x = x;
+		mlx->x_cord->y = y;
+		++mlx->enemy;
 	}
 }
 

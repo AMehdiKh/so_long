@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/11 12:23:52 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:48:30 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
+# include <time.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../ft_printf/ft_printf.h"
 # include "../LibFT/libft.h"
@@ -53,10 +54,12 @@ typedef struct s_mlx
 	t_cord		p_cord[1];
 	t_cord		s_cord[1];
 	t_cord		e_cord[1];
+	t_cord		x_cord[1];
 	char		**map;
 	int			x;
 	int			y;
 	int			player;
+	int			enemy;
 	int			coin;
 	int			exit;
 	int			moves;

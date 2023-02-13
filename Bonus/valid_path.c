@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 03:17:50 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:55:11 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:51:46 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	ft_bfs(t_mlx *mlx)
 	t_queue	queue[1];
 	int		valid_coins;
 	int		valid_exit;
+	int		valid_enemy;
 
 	valid_coins = 0;
+	valid_enemy = 0;
 	valid_exit = 0;
 	ft_bzero(queue, sizeof(t_queue));
 	queue->visited = ft_visited(mlx);
@@ -30,10 +32,9 @@ void	ft_bfs(t_mlx *mlx)
 			valid_exit = 1;
 		else if (mlx->map[queue->front->cord->y][queue->front->cord->x] == 'C')
 			++valid_coins;
+		else if (mlx->map[queue->front->cord->y][queue->front->cord->x] == 'X')
+			++valid_enemy;
 		ft_dequeue(queue);
-		if (valid_exit && valid_coins == mlx->coin)
-			while (queue->size)
-				ft_dequeue(queue);
 	}
 	ft_clear((void **)queue->visited);
 	if (valid_coins != mlx->coin || !valid_exit)

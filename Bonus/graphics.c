@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/11 12:05:40 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:52:19 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_graphics(t_mlx *mlx)
 {
+	srand(time(NULL));
 	mlx->mid_map = mlx->x / 2;
 	mlx->str_x = (72 * mlx->mid_map) + 32;
 	ft_mlx_init(mlx, mlx->x * 72, mlx->y * 72);
@@ -63,6 +64,8 @@ void	ft_put_sprite(t_mlx *mlx)
 				ft_draw_image(mlx, "./textures/coin.png", x, y);
 			else if (mlx->map[y][x] == '1')
 				ft_draw_image(mlx, "./textures/eye.png", x, y);
+			else if (mlx->map[y][x] == 'X')
+				ft_draw_image(mlx, "./textures/x.png", x, y);
 		}
 	}
 }
@@ -104,4 +107,24 @@ void	ft_loop(void *param)
 		ft_moves_str(mlx);
 	if (mlx->coin != mlx->last_coin)
 		ft_coins_str(mlx);
+	// if ()
 }
+
+// void	ft_enemy(t_mlx *mlx)
+// {
+// 	int		x;
+// 	int		y;
+// 	int		rand;
+
+// 	x = mlx->x_cord->x;
+// 	y = mlx->x_cord->y;
+// 	random = rand() % 4;
+// 	if (map[y][x + 1] != '1' && rand == 0)
+// 		ft_enqueue(queue, map, x + 1, y);
+// 	else if (map[y][x - 1] != '1' && rand == 1)
+// 		ft_enqueue(queue, map, x - 1, y);
+// 	else if (map[y + 1][x] != '1' && rand == 2)
+// 		ft_enqueue(queue, map, x, y + 1);
+// 	else if (map[y - 1][x] != '1' && rand == 3)
+// 		ft_enqueue(queue, map, x, y - 1);
+// }
