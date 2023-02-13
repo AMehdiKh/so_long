@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/11 12:23:32 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:25:57 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,4 @@ void	ft_esc(t_mlx *mlx, int x, int y)
 	mlx_terminate(mlx->win);
 	ft_clear((void **)mlx->map);
 	exit(EXIT_SUCCESS);
-}
-
-void	ft_close_key(mlx_key_data_t keydata, void *param)
-{
-	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
-		ft_esc(param, 0, 0);
 }
