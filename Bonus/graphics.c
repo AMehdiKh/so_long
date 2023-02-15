@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 08:32:22 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:26:16 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_hooks(mlx_key_data_t keydata, void *param)
 		else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
 			ft_right(mlx, &x, &y);
 		if ((x == mlx->e_cord->x && y == mlx->e_cord->y && !mlx->coin)
-			|| (x == mlx->x_cord->x && y == mlx->x_cord->y)
+			|| (x == mlx->x_cord->x && y == mlx->x_cord->y && mlx->enemy)
 			|| keydata.key == MLX_KEY_ESCAPE)
 			ft_esc(mlx, x, y);
 	}
@@ -105,5 +105,6 @@ void	ft_loop(void *param)
 		ft_moves_str(mlx);
 	if (mlx->coin != mlx->last_coin)
 		ft_coins_str(mlx);
-	ft_enemy(mlx);
+	if (mlx->enemy)
+		ft_enemy(mlx);
 }

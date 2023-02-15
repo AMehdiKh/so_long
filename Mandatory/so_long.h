@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/13 16:08:14 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:48:56 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <errno.h>
 # include <stdio.h>
 # include "../MLX42/include/MLX42/MLX42.h"
-# include "../ft_printf/ft_printf.h"
 # include "../LibFT/libft.h"
 
 typedef struct s_cord
@@ -62,40 +61,41 @@ typedef struct s_mlx
 	int			max_height;
 }	t_mlx;
 
-void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
+void	ft_check_arg(t_mlx *mlx, int ac, char *av);
 
 char	**ft_parse(char *map_name);
 char	*ft_line(int fd);
 
-char	*ft_strjoin_long(char *s1, char *s2);
-void	*ft_free_return(void *ptr1, void *ptr2);
 void	map_check(t_mlx *mlx);
 void	ft_count_items(t_mlx *mlx, int x, int y);
 
+void	ft_bfs(t_mlx *mlx);
 bool	**ft_visited(t_mlx *mlx);
+void	ft_isvalid(t_queue *queue, char **map);
 t_node	*ft_newnode(t_queue *queue, char **map, int x, int y);
 void	ft_enqueue(t_queue *queue, char **map, int x, int y);
 void	ft_dequeue(t_queue *queue);
-void	ft_isvalid(t_queue *queue, char **map);
-void	ft_bfs(t_mlx *mlx);
-
-void	ft_err(char **map, char *str);
-void	ft_clear(void **ptr);
 
 void	ft_graphics(t_mlx *mlx);
+void	ft_mlx_init(t_mlx *mlx, int x, int y);
 void	ft_put_sprite(t_mlx *mlx);
-
-void	ft_player_sprite(t_mlx *mlx, t_cord *p);
+void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
 int		ft_exit_sprite(t_mlx *mlx, t_cord *e);
 int		ft_star_sprite(t_mlx *mlx, t_cord *s);
+void	ft_player_sprite(t_mlx *mlx, t_cord *p);
 
 void	ft_hooks(mlx_key_data_t keydata, void *param);
-void	ft_close(void *param);
-
 void	ft_right(t_mlx *mlx, int *x, int *y);
 void	ft_left(t_mlx *mlx, int *x, int *y);
 void	ft_down(t_mlx *mlx, int *x, int *y);
 void	ft_up(t_mlx *mlx, int *x, int *y);
 void	ft_esc(t_mlx *mlx, int x, int y);
+
+void	ft_close(void *param);
+
+void	*ft_free_return(void *ptr1, void *ptr2);
+void	ft_err(char **ptr, char *str);
+void	ft_clear(void **ptr);
+char	*ft_strjoin_long(char *s1, char *s2);
 
 #endif

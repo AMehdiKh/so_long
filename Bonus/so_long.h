@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 11:35:56 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:21:55 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
 int		ft_exit_sprite(t_mlx *mlx, t_cord *e);
 int		ft_star_sprite(t_mlx *mlx, t_cord *s);
 void	ft_player_sprite(t_mlx *mlx, t_cord *p);
-
 
 void	ft_hooks(mlx_key_data_t keydata, void *param);
 void	ft_right(t_mlx *mlx, int *x, int *y);

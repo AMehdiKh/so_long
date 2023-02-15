@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/11 11:30:38 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:24:19 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	ft_right(t_mlx *mlx, int *x, int *y)
 		ft_player_sprite(mlx, mlx->p_cord);
 		return ;
 	}
+	if (mlx->map[*y][*x] != 'E')
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	if (mlx->map[*y][*x + 1] == 'C')
 	{
 		mlx->map[*y][*x + 1] = '0';
 		--mlx->coin;
 	}
-	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->x = ++*x;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	ft_printf("\e[0;32mPlayer move : %d\n", ++mlx->moves);
 }
 
 void	ft_left(t_mlx *mlx, int *x, int *y)
@@ -38,48 +38,48 @@ void	ft_left(t_mlx *mlx, int *x, int *y)
 		ft_player_sprite(mlx, mlx->p_cord);
 		return ;
 	}
+	if (mlx->map[*y][*x] != 'E')
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	if (mlx->map[*y][*x - 1] == 'C')
 	{
 		mlx->map[*y][*x - 1] = '0';
 		--mlx->coin;
 	}
-	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->x = --*x;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	ft_printf("\e[0;32mPlayer move : %d\n", ++mlx->moves);
 }
 
 void	ft_down(t_mlx *mlx, int *x, int *y)
 {
 	if (mlx->map[*y + 1][*x] == '1')
 		return ;
+	if (mlx->map[*y][*x] != 'E')
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	if (mlx->map[*y + 1][*x] == 'C')
 	{
 		mlx->map[*y + 1][*x] = '0';
 		--mlx->coin;
 	}
-	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->y = ++*y;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	ft_printf("\e[0;32mPlayer move : %d\n", ++mlx->moves);
 }
 
 void	ft_up(t_mlx *mlx, int *x, int *y)
 {
 	if (mlx->map[*y - 1][*x] == '1')
 		return ;
+	if (mlx->map[*y][*x] != 'E')
+		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	if (mlx->map[*y - 1][*x] == 'C')
 	{
 		mlx->map[*y - 1][*x] = '0';
 		--mlx->coin;
 	}
-	if (mlx->map[*y][*x] != 'E')
-		ft_draw_image(mlx, "./textures/space.png", *x, *y);
 	mlx->p_cord->y = --*y;
 	ft_player_sprite(mlx, mlx->p_cord);
-	ft_printf("\e[0;32mThe player move : %d\n", ++mlx->moves);
+	ft_printf("\e[0;32mPlayer move : %d\n", ++mlx->moves);
 }
 
 void	ft_esc(t_mlx *mlx, int x, int y)

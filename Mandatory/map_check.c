@@ -6,66 +6,11 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/10 02:53:19 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:09:01 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-char	**ft_parse(char *map_name)
-{
-	char	**map;
-	char	*line;
-	int		fd;
-
-	map_name = ft_strjoin("./maps/", map_name);
-	fd = open(map_name, O_RDONLY);
-	if (fd < 0)
-	{
-		fd = open(map_name + 7, O_RDONLY);
-		if (fd < 0)
-		{
-			free(map_name);
-			ft_err(NULL, NULL);
-		}
-	}
-	free(map_name);
-	line = ft_line(fd);
-	map = ft_split(line, '\n');
-	free(line);
-	if (!map || !*map)
-		ft_err(map, "\e[0;31mError: map is empty");
-	return (map);
-}
-
-char	*ft_line(int fd)
-{
-	char	*buffer;
-	char	*line;
-	int		nbyte;
-
-	buffer = ft_calloc(4096, 1);
-	line = ft_calloc(1, 1);
-	nbyte = 1;
-	if (!buffer || !line)
-		ft_free_return(line, buffer);
-	if (!buffer || !line)
-		ft_err(NULL, NULL);
-	while (nbyte)
-	{
-		nbyte = read(fd, buffer, 4096);
-		if (nbyte < 0)
-		{
-			ft_free_return(line, buffer);
-			ft_err(NULL, NULL);
-		}
-		buffer[nbyte] = '\0';
-		line = ft_strjoin_long(line, buffer);
-	}
-	close(fd);
-	free(buffer);
-	return (line);
-}
 
 void	map_check(t_mlx *mlx)
 {

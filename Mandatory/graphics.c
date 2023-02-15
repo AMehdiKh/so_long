@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/14 19:53:49 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:18:29 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,56 @@
 
 void	ft_graphics(t_mlx *mlx)
 {
-	char	**map;
-
-	map = mlx->map;
-	mlx->win = mlx_init(72 * mlx->x, 72 * mlx->y, "Inferno", false);
-	if (!mlx->win)
-		ft_err(map, "\e[0;31mError: MinilibX initialization failed");
-	mlx->img = mlx_new_image(mlx->win, 72 * mlx->x, 72 * mlx->y);
-	if (!mlx->img)
-	{
-		mlx_terminate(mlx->win);
-		ft_err(map, "\e[0;31mError: Creating new image failed");
-	}
-	if (mlx_image_to_window(mlx->win, mlx->img, 0, 0) < 0)
-	{
-		mlx_delete_image(mlx->win, mlx->img);
-		mlx_terminate(mlx->win);
-		ft_err(map, "\e[0;31mError: Putting image to window failed");
-	}
+	ft_mlx_init(mlx, mlx->x * 72, mlx->y * 72);
 	ft_put_sprite(mlx);
 	mlx_key_hook(mlx->win, &ft_hooks, mlx);
 	mlx_close_hook(mlx->win, &ft_close, mlx);
 	mlx_loop(mlx->win);
+}
+
+void	ft_mlx_init(t_mlx *mlx, int x, int y)
+{
+	mlx->win = mlx_init(x, y, "Inferno", false);
+	if (!mlx->win)
+		ft_err(mlx->map, "\e[0;31mError: MinilibX initialization failed");
+	mlx->img = mlx_new_image(mlx->win, x, y);
+	if (!mlx->img)
+	{
+		mlx_terminate(mlx->win);
+		ft_err(mlx->map, "\e[0;31mError: Creating new image failed");
+	}
+	if (mlx_image_to_window(mlx->win, mlx->img, 0, 0) < 0)
+	{
+		mlx_terminate(mlx->win);
+		ft_err(mlx->map, "\e[0;31mError: Putting image to window failed");
+	}
+}
+
+void	ft_put_sprite(t_mlx *mlx)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (mlx->map[++y])
+	{
+		x = -1;
+		while (mlx->map[y][++x])
+		{
+			if (y == 0 || !(mlx->map[y + 1]) || x == 0 || !(mlx->map[y][x + 1]))
+				ft_draw_image(mlx, "./textures/torch0.png", x, y);
+			else if (mlx->map[y][x] == '0')
+				ft_draw_image(mlx, "./textures/space.png", x, y);
+			else if (mlx->map[y][x] == 'P')
+				ft_draw_image(mlx, "./textures/star_right.png", x, y);
+			else if (mlx->map[y][x] == 'E')
+				ft_draw_image(mlx, "./textures/d_closed.png", x, y);
+			else if (mlx->map[y][x] == 'C')
+				ft_draw_image(mlx, "./textures/coin.png", x, y);
+			else if (mlx->map[y][x] == '1')
+				ft_draw_image(mlx, "./textures/eye.png", x, y);
+		}
+	}
 }
 
 void	ft_hooks(mlx_key_data_t keydata, void *param)

@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror -MMD -fsanitize=address
 ###############################################################################################################
 M_DIR = Mandatory
 
-SRCS = main.c map_check.c valid_path.c outils.c graphics.c sprites.c moves.c
+SRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c outils.c
 
 OBJS = ${SRCS:%.c=$(M_DIR)/%.o}
 
@@ -30,19 +30,21 @@ LIBGLFW = ./MLX42/build/libglfw.3.3.dylib
 .PHONY: clean
 all: $(NAME)
 
-$(NAME): $(OBJS) 
-	$(MAKE) -C LibFT
-	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) $(LIBGLFW) -fsanitize=address -static-libasan -fno-omit-frame-pointer -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
 
-bonus: $(BOBJS)
-	$(MAKE) -C LibFT
+bonus: $(LIBFT) $(BOBJS)
 	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	@touch $@
+
+$(LIBFT):
+	$(MAKE) -C LibFT
 
 sinclude $(M_DEP) $(B_DEP)
 
 clean:
 	$(MAKE) fclean -C LibFT
-	rm -f $(OBJS) $(BOBJS) $(M_DEP) $(B_DEP) $(LIBFT)
+	rm -f $(OBJS) $(BOBJS) $(M_DEP) $(B_DEP) bonus
 
 fclean: clean
 	rm -f $(NAME)

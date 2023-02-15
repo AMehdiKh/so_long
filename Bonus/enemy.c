@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 04:23:47 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 08:25:14 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:21:43 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_check_enemy(t_mlx *mlx, int x, int y)
 	if (ft_valid_enemy(mlx, 0, x, y - 1))
 		ft_emove(mlx, x, y - 1);
 }
-
 
 int	ft_valid_enemy(t_mlx *mlx, int index, int x, int y)
 {

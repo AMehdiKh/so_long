@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 10:03:52 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:41:48 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_esc(t_mlx *mlx, int x, int y)
 		mlx_close_hook(mlx->win, &ft_close, mlx);
 		mlx_loop(mlx->win);
 	}
-	if (x == mlx->x_cord->x && y == mlx->x_cord->y)
+	else if ((x == mlx->x_cord->x && y == mlx->x_cord->y) && mlx->enemy)
 	{
 		mlx_terminate(mlx->win);
 		ft_mlx_init(mlx, 600, 600);
