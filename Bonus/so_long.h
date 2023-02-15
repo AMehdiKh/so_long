@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/13 19:48:30 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 07:57:21 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_H
 
 # include <stdbool.h>
+# include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -58,6 +59,7 @@ typedef struct s_mlx
 	char		**map;
 	int			x;
 	int			y;
+	int			clock;
 	int			player;
 	int			enemy;
 	int			coin;
@@ -69,6 +71,7 @@ typedef struct s_mlx
 	int			str_x;
 	int			max_width;
 	int			max_height;
+	int			random;
 }	t_mlx;
 
 void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y);
@@ -77,6 +80,8 @@ void	ft_mlx_init(t_mlx *mlx, int x, int y);
 void	ft_coins_str(t_mlx *mlx);
 void	ft_check_arg(t_mlx *mlx, int ac, char *av);
 void	ft_close_key(mlx_key_data_t keydata, void *param);
+void	ft_emove(t_mlx *mlx, int x, int y);
+void	ft_enemy(t_mlx *mlx);
 
 char	**ft_parse(char *map_name);
 char	*ft_line(int fd);
@@ -115,6 +120,7 @@ void	ft_esc(t_mlx *mlx, int x, int y);
 void	ft_torches(t_mlx *mlx, char *str);
 void	ft_loop(void *param);
 void	ft_animation(t_mlx *mlx);
-
+void	ft_check_enemy(t_mlx *mlx, int x, int y);
+int		ft_valid_enemy(t_mlx *mlx, int index, int x, int y);
 
 #endif

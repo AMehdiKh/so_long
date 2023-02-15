@@ -15,7 +15,7 @@ M_DEP = ${OBJS:.o=.d}
 ##############################################################################################################
 B_DIR = Bonus
 
-BSRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c loop.c outils.c
+BSRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c loop.c enemy.c outils.c
 
 BOBJS = ${BSRCS:%.c=$(B_DIR)/%.o}
 
@@ -25,7 +25,7 @@ LIBFT = ./LibFT/libft.a
 
 PRINTF = ./ft_printf/libftprintf.a
 
-LIBMLX = ./MLX42/build/libmlx42.a
+LIBMLX = ./linux/libmlx42.a
 
 LIBGLFW = ./MLX42/build/libglfw.3.3.dylib
 ##############################################################################################################
@@ -35,12 +35,12 @@ all: $(NAME)
 $(NAME): $(OBJS) 
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) $(LIBGLFW) -fsanitize=address -static-libsan -fno-omit-frame-pointer -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(LIBMLX) $(LIBGLFW) -fsanitize=address -static-libasan -fno-omit-frame-pointer -o $(NAME)
 
 bonus: $(BOBJS)
 	$(MAKE) -C LibFT
 	$(MAKE) -C ft_printf
-	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) $(LIBGLFW) -fsanitize=address -static-libsan -fno-omit-frame-pointer -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(PRINTF) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
 
 sinclude $(M_DEP) $(B_DEP)
 

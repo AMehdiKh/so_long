@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/13 19:18:45 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:40:09 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	map_check(t_mlx *mlx)
 	}
 	if ((mlx->y * 72) > mlx->max_height || (mlx->x * 72) > mlx->max_width)
 		ft_err(map, "\e[0;31mError: The map is bigger than monitor size");
-	if (mlx->player != 1 || mlx->exit != 1 || mlx->coin < 1)
+	if (mlx->player != 1 || mlx->exit != 1 || mlx->coin < 1 || mlx->enemy > 1)
 		ft_err(map, "\e[0;31mError: The number of items in map is incorrect");
 }
 
