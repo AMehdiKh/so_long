@@ -3,7 +3,7 @@ NAME = so_long
 ###############################################################################################################
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -MMD
 ###############################################################################################################
 M_DIR = Mandatory
 
@@ -23,7 +23,7 @@ B_DEP = ${BOBJS:.o=.d}
 ##############################################################################################################
 LIBFT = ./LibFT/libft.a
 
-LIBMLX = ./linux/libmlx42.a
+LIBMLX = ./MLX42/build/libmlx42.a
 
 LIBGLFW = ./MLX42/build/libglfw.3.3.dylib
 ##############################################################################################################
@@ -31,20 +31,20 @@ LIBGLFW = ./MLX42/build/libglfw.3.3.dylib
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 bonus: $(LIBFT) $(BOBJS)
-	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
-	@touch $@
+	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C LibFT
+	@$(MAKE) -C LibFT
 
 sinclude $(M_DEP) $(B_DEP)
 
 clean:
 	$(MAKE) fclean -C LibFT
-	rm -f $(OBJS) $(BOBJS) $(M_DEP) $(B_DEP) bonus
+	$(RM) $(OBJS) $(BOBJS) 
+	@$(RM) $(M_DEP) $(B_DEP)
 
 fclean: clean
 	rm -f $(NAME)
