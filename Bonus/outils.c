@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:51:37 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/11 07:33:57 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:58:52 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ char	*ft_strjoin_long(char *s1, char *s2)
 	ft_strlcat(map_line, s2, slen);
 	free(s1);
 	return (map_line);
+}
+
+void	ft_close_key(mlx_key_data_t keydata, void *param)
+{
+	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
+		if (keydata.key == MLX_KEY_ESCAPE)
+			ft_esc(param, 0, 0);
 }

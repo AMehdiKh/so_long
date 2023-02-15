@@ -12,13 +12,11 @@
 
 #include "libft.h"
 
-static unsigned int	ft_nbrlen(int n)
+int	ft_nbrlen(int n)
 {
-	unsigned int	nbrlen;
+	int	nbrlen;
 
-	nbrlen = 0;
-	if (n <= 0)
-		++nbrlen;
+	nbrlen = (n == 0);
 	while (n)
 	{
 		++nbrlen;
@@ -29,28 +27,20 @@ static unsigned int	ft_nbrlen(int n)
 
 char	*ft_itoa(int n)
 {
-	unsigned int	nbrlen;
-	unsigned int	nbr;
-	char			*s;
+	char	*str;
+	int		nbrlen;
 
 	nbrlen = ft_nbrlen(n);
-	s = malloc(nbrlen + 1);
-	if (!s)
+	str = malloc(nbrlen + 1);
+	if (!str)
 		return (NULL);
-	s[nbrlen--] = '\0';
+	str[nbrlen--] = '\0';
 	if (n == 0)
-		*s = '0';
-	if (n < 0)
+		str[0] = '0';
+	while (n)
 	{
-		*s = '-';
-		nbr = -n;
+		str[nbrlen--] = (n % 10) + 48;
+		n /= 10;
 	}
-	else
-		nbr = n;
-	while (nbr)
-	{
-		s[nbrlen--] = (nbr % 10) + 48;
-		nbr /= 10;
-	}
-	return (s);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/13 22:40:09 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:56:54 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,37 +91,4 @@ bool	**ft_visited(t_mlx *mlx)
 		++i;
 	}
 	return (visited);
-}
-
-int	ft_nbrlen(int n)
-{
-	int	nbrlen;
-
-	nbrlen = (n == 0);
-	while (n)
-	{
-		++nbrlen;
-		n /= 10;
-	}
-	return (nbrlen);
-}
-
-char	*ft_itoa(int n)
-{
-	char	*str;
-	int		nbrlen;
-
-	nbrlen = ft_nbrlen(n);
-	str = malloc(nbrlen + 1);
-	if (!str)
-		return (NULL);
-	str[nbrlen--] = '\0';
-	if (n == 0)
-		str[0] = '0';
-	while (n)
-	{
-		str[nbrlen--] = (n % 10) + 48;
-		n /= 10;
-	}
-	return (str);
 }

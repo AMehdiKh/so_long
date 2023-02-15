@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 07:35:40 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 06:44:47 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 09:10:58 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 	ft_check_arg(mlx, ac, av[1]);
 	mlx->map = ft_parse(av[1]);
 	map_check(mlx);
-	// ft_bfs(mlx);
+	ft_bfs(mlx);
 	ft_graphics(mlx);
 	return (0);
 }

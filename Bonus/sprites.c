@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/13 16:25:50 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:57:21 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,4 @@ void	ft_player_sprite(t_mlx *mlx, t_cord *p)
 		else
 			ft_draw_image(mlx, "./textures/player_right.png", p->x, p->y);
 	}
-}
-
-void	ft_close_key(mlx_key_data_t keydata, void *param)
-{
-	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
-		ft_esc(param, 0, 0);
 }

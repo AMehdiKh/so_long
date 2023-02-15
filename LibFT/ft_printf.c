@@ -6,11 +6,11 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:47:09 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/01/31 19:07:55 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:22:02 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 const char	*ft_check_spec(const char *format, t_printf *tab)
 {

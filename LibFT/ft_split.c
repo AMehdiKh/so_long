@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static void	*ft_clear(char **ptr, size_t x)
+void	*ft_clear_split(char **ptr, size_t x)
 {
 	while (x--)
 		free(ptr[x]);
@@ -20,7 +20,7 @@ static void	*ft_clear(char **ptr, size_t x)
 	return (NULL);
 }
 
-static size_t	word_count(char const *s, char c)
+size_t	word_count(char const *s, char c)
 {
 	size_t	wc;
 
@@ -37,7 +37,7 @@ static size_t	word_count(char const *s, char c)
 	return (wc);
 }
 
-static char	**ft_alloc(char **ptr, const char *s, char c, size_t wc)
+char	**ft_alloc(char **ptr, const char *s, char c, size_t wc)
 {
 	size_t	wl;
 	size_t	x;
@@ -52,7 +52,7 @@ static char	**ft_alloc(char **ptr, const char *s, char c, size_t wc)
 			++wl;
 		ptr[x] = malloc(wl + 1);
 		if (!ptr[x])
-			return (ft_clear(ptr, x));
+			return (ft_clear_split(ptr, x));
 		ft_strlcpy(ptr[x], s, wl + 1);
 		s += wl;
 		++x;

@@ -6,11 +6,11 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:40:56 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/01/31 19:09:37 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:21:53 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 void	ft_putchar(char c, t_printf *tab)
 {
