@@ -31,13 +31,13 @@ LIBGLFW = ./MLX42/build/libglfw.3.3.dylib
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
 
 bonus: $(LIBFT) $(BOBJS)
-	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
 
 $(LIBFT):
-	@$(MAKE) -C LibFT
+	$(MAKE) -C LibFT
 
 sinclude $(M_DEP) $(B_DEP)
 
@@ -47,6 +47,6 @@ clean:
 	@$(RM) $(M_DEP) $(B_DEP)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
