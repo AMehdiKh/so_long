@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 07:35:40 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 14:49:06 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/22 22:41:45 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	ft_check_arg(t_mlx *mlx, int ac, char *av)
 
 	if (ac != 2 || ft_strlen(av) <= 4)
 		ft_err(NULL, "\e[0;31mError: More or less than one map entered");
-	if (ft_strncmp(av + (ft_strlen(av) - 4), ".der", 4))
-		ft_err(NULL, "\e[0;31mError: The map must be in [.der] format");
+	if (ft_strncmp(av + (ft_strlen(av) - 4), ".ber", 4))
+		ft_err(NULL, "\e[0;31mError: The map must be in [.ber] format");
 	win = mlx_init(1, 1, "this is only for fetching monitor size", false);
 	if (!win)
 		ft_err(NULL, "\e[0;31mError: MLX init for monitor size failed");

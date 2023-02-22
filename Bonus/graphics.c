@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 13:26:16 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/22 23:19:09 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	ft_hooks(mlx_key_data_t keydata, void *param)
 	mlx = param;
 	x = mlx->p_cord->x;
 	y = mlx->p_cord->y;
-	if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT)
+	if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT
+		|| keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D)
 		mlx->key = keydata.key;
 	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
 	{

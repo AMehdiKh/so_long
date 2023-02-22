@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   loop_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 09:38:18 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/11 12:26:28 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/22 23:47:15 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,31 @@ void	ft_animation(t_mlx *mlx)
 	{
 		ft_torches(mlx, "./textures/torch4.png");
 		clock = 0;
+	}
+}
+
+void	ft_torches(t_mlx *mlx, char *str)
+{
+	int	x;
+	int	y;
+
+	x = -1;
+	while (++x < mlx->x)
+	{	
+		if (mlx->mid_map == x)
+		{
+			ft_draw_image(mlx, "./textures/moves.png", x, 0);
+			ft_draw_image(mlx, "./textures/moves.png", x, mlx->y - 1);
+			continue ;
+		}
+		ft_draw_image(mlx, str, x, mlx->y - 1);
+		ft_draw_image(mlx, str, x, 0);
+	}
+	y = -1;
+	while (++y < mlx->y)
+	{
+		ft_draw_image(mlx, str, 0, y);
+		ft_draw_image(mlx, str, mlx->x - 1, y);
 	}
 }
 
@@ -80,31 +105,6 @@ void	ft_coins_str(t_mlx *mlx)
 			mlx->str_x - px, (mlx->y - 1) * 72 + 38);
 	mlx->last_coin = mlx->coin;
 	free(str);
-}
-
-void	ft_torches(t_mlx *mlx, char *str)
-{
-	int	x;
-	int	y;
-
-	x = -1;
-	while (++x < mlx->x)
-	{	
-		if (mlx->mid_map == x)
-		{
-			ft_draw_image(mlx, "./textures/moves.png", x, 0);
-			ft_draw_image(mlx, "./textures/moves.png", x, mlx->y - 1);
-			continue ;
-		}
-		ft_draw_image(mlx, str, x, mlx->y - 1);
-		ft_draw_image(mlx, str, x, 0);
-	}
-	y = -1;
-	while (++y < mlx->y)
-	{
-		ft_draw_image(mlx, str, 0, y);
-		ft_draw_image(mlx, str, mlx->x - 1, y);
-	}
 }
 
 void	ft_close(void *param)

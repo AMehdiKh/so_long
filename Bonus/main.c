@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 07:35:40 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 20:50:40 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:19:56 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**ft_parse(char *map_name)
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
 	{
+		errno = 0;
 		fd = open(map_name + 7, O_RDONLY);
 		if (fd < 0)
 		{

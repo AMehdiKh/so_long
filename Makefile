@@ -24,8 +24,6 @@ B_DEP = ${BOBJS:.o=.d}
 LIBFT = ./LibFT/libft.a
 
 LIBMLX = ./MLX42/build/libmlx42.a
-
-LIBGLFW = ./MLX42/build/libglfw.3.3.dylib
 ##############################################################################################################
 .PHONY: clean
 all: $(NAME)
@@ -34,7 +32,7 @@ $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
 
 bonus: $(LIBFT) $(BOBJS)
-	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
+	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C LibFT
