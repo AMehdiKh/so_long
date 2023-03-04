@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:39:04 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 15:40:32 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:46:25 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		*ft_memset(void *s, int c, size_t len);
 
 void		ft_putendl_fd(char *s, int fd);
 

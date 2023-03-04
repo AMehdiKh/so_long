@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 07:35:40 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/23 00:19:56 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:34:22 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int	main(int ac, char **av)
 {
 	t_mlx	mlx[1];
 
-	errno = 0;
-	ft_bzero(mlx, sizeof(t_mlx));
-	ft_check_arg(mlx, ac, av[1]);
+	ft_check_arg(ft_memset(mlx, 0, sizeof(t_mlx)), ac, av[1]);
 	mlx->map = ft_parse(av[1]);
 	map_check(mlx);
 	ft_bfs(mlx);
@@ -30,9 +28,11 @@ void	ft_check_arg(t_mlx *mlx, int ac, char *av)
 {
 	mlx_t	*win;
 
-	if (ac != 2 || ft_strlen(av) <= 4)
+	if (ac != 2)
 		ft_err(NULL, "\e[0;31mError: More or less than one map entered");
-	if (ft_strncmp(av + (ft_strlen(av) - 4), ".ber", 4))
+	if (ft_strlen(av) <= 4)
+		ft_err(NULL, "\e[0;31mError: Map's name is incorrect");
+	if (ft_strncmp(".ber", av + (ft_strlen(av) - 4), 4))
 		ft_err(NULL, "\e[0;31mError: The map must be in [.ber] format");
 	win = mlx_init(1, 1, "this is only for fetching monitor size", false);
 	if (!win)
@@ -43,15 +43,12 @@ void	ft_check_arg(t_mlx *mlx, int ac, char *av)
 
 char	**ft_parse(char *map_name)
 {
-	char	**map;
-	char	*line;
-	int		fd;
+	int	fd;
 
 	map_name = ft_strjoin("./maps/", map_name);
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
 	{
-		errno = 0;
 		fd = open(map_name + 7, O_RDONLY);
 		if (fd < 0)
 		{
@@ -60,7 +57,24 @@ char	**ft_parse(char *map_name)
 		}
 	}
 	free(map_name);
-	line = ft_line(fd);
+	return (ft_check_newline(ft_line(fd)));
+}
+
+char	**ft_check_newline(char *line)
+{
+	char	**map;
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\n' && line[i + 1] == '\n')
+		{
+			free(line);
+			ft_err(NULL, "\e[0;31mError: The map has invalid characters");
+		}
+		++i;
+	}
 	map = ft_split(line, '\n');
 	free(line);
 	if (!map || !*map)

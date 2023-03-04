@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 06:37:44 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/22 22:26:29 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:05:15 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ void	ft_draw_image(t_mlx *mlx, char *png_path, int x, int y)
 	png = mlx_load_png(png_path);
 	if (!png)
 	{
-		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
 		ft_err(mlx->map, "\e[0;31mError: Png load failed");
 	}
 	if (!mlx_draw_texture(mlx->img, png, x * 72, y * 72))
 	{
 		mlx_delete_texture(png);
-		mlx_delete_image(mlx->win, mlx->img);
 		mlx_terminate(mlx->win);
 		ft_err(mlx->map, "\e[0;31mError: drawing texture to the image failed");
 	}
@@ -39,7 +37,7 @@ int	ft_exit_sprite(t_mlx *mlx, t_cord *e)
 	{
 		if (e->x == mlx->p_cord->x && e->y == mlx->p_cord->y)
 		{
-			if (mlx->key == MLX_KEY_LEFT || mlx->key == MLX_KEY_A)
+			if (mlx->key == MLX_KEY_LEFT)
 				ft_draw_image(mlx, "./textures/dc_left.png", e->x, e->y);
 			else
 				ft_draw_image(mlx, "./textures/dc_right.png", e->x, e->y);
@@ -57,7 +55,7 @@ int	ft_star_sprite(t_mlx *mlx, t_cord *s)
 {
 	if (s->x == mlx->p_cord->x && s->y == mlx->p_cord->y)
 	{
-		if (mlx->key == MLX_KEY_LEFT || mlx->key == MLX_KEY_A)
+		if (mlx->key == MLX_KEY_LEFT)
 			ft_draw_image(mlx, "./textures/star_left.png", s->x, s->y);
 		else
 			ft_draw_image(mlx, "./textures/star_right.png", s->x, s->y);
@@ -77,7 +75,7 @@ void	ft_player_sprite(t_mlx *mlx, t_cord *p)
 	exit = ft_exit_sprite(mlx, mlx->e_cord);
 	if (star && exit)
 	{
-		if (mlx->key == MLX_KEY_LEFT || mlx->key == MLX_KEY_A)
+		if (mlx->key == MLX_KEY_LEFT)
 			ft_draw_image(mlx, "./textures/player_left.png", p->x, p->y);
 		else
 			ft_draw_image(mlx, "./textures/player_right.png", p->x, p->y);

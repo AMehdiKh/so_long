@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 04:23:47 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 15:21:43 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/02/23 07:50:54 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	ft_emove(t_mlx *mlx, int x, int y)
 		ft_draw_image(mlx, "./textures/coin.png", pre_x, pre_y);
 	else if (mlx->map[pre_y][pre_x] == 'E')
 		ft_exit_sprite(mlx, mlx->e_cord);
+	else if (mlx->map[pre_y][pre_x] == 'P')
+		ft_draw_image(mlx, "./textures/star.png", pre_x, pre_y);
 	else
 		ft_draw_image(mlx, "./textures/space.png", pre_x, pre_y);
 	ft_draw_image(mlx, "./textures/enemy.png", x, y);

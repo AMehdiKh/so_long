@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:51:37 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/22 23:39:29 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:11:10 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	ft_clear(void **ptr)
 
 	i = 0;
 	if (ptr)
+	{
 		while (ptr[i])
 			++i;
-	while (i--)
-		free(ptr[i]);
-	free(ptr);
+		while (i--)
+			free(ptr[i]);
+		free(ptr);
+	}
 }
 
 void	ft_err(char **ptr, char *str)

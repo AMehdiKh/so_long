@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 14:48:56 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:28:53 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_mlx
 void	ft_check_arg(t_mlx *mlx, int ac, char *av);
 
 char	**ft_parse(char *map_name);
+char	**ft_check_newline(char *line);
 char	*ft_line(int fd);
 
 void	map_check(t_mlx *mlx);

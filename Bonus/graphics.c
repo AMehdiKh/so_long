@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/22 23:19:09 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:52:13 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,17 @@ void	ft_hooks(mlx_key_data_t keydata, void *param)
 	mlx = param;
 	x = mlx->p_cord->x;
 	y = mlx->p_cord->y;
-	if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT
-		|| keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D)
+	if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT)
 		mlx->key = keydata.key;
 	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
 	{
-		if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
+		if (keydata.key == MLX_KEY_UP)
 			ft_up(mlx, &x, &y);
-		else if (keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
+		else if (keydata.key == MLX_KEY_DOWN)
 			ft_down(mlx, &x, &y);
-		else if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
+		else if (keydata.key == MLX_KEY_LEFT)
 			ft_left(mlx, &x, &y);
-		else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
+		else if (keydata.key == MLX_KEY_RIGHT)
 			ft_right(mlx, &x, &y);
 		if ((x == mlx->e_cord->x && y == mlx->e_cord->y && !mlx->coin)
 			|| (x == mlx->x_cord->x && y == mlx->x_cord->y && mlx->enemy)
