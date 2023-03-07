@@ -1,3 +1,3 @@
-/Users/ael-khel/Desktop/so_long/MLX42/build/CMakeFiles/mlx42.dir
-/Users/ael-khel/Desktop/so_long/MLX42/build/CMakeFiles/edit_cache.dir
-/Users/ael-khel/Desktop/so_long/MLX42/build/CMakeFiles/rebuild_cache.dir
+/home/amehdikh/Desktop/so_short/MLX42/build/CMakeFiles/mlx42.dir
+/home/amehdikh/Desktop/so_short/MLX42/build/CMakeFiles/edit_cache.dir
+/home/amehdikh/Desktop/so_short/MLX42/build/CMakeFiles/rebuild_cache.dir

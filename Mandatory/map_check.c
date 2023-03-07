@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 12:09:01 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:18:09 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ bool	**ft_visited(t_mlx *mlx)
 	bool	**visited;
 	int		i;
 
-	i = 0;
 	visited = ft_calloc(mlx->y + 1, sizeof(bool *));
 	if (!visited)
 		ft_err(mlx->map, NULL);
+	i = 0;
 	while (i < mlx->y)
 	{
 		visited[i] = ft_calloc(mlx->x, sizeof(bool));

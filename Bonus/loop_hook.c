@@ -6,13 +6,40 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 09:38:18 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/22 23:47:15 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/07 10:31:28 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_animation(t_mlx *mlx)
+void	ft_eye_ani(t_mlx *mlx)
+{
+	char		*str[2];
+	static int	clock;
+	static int	eye;
+	int			x;
+	int			y;
+
+	str[0] = "./textures/eye_left.png";
+	str[1] = "./textures/eye_right.png";
+	if (clock % 60 == 0)
+	{
+		y = 0;
+		while (++y < mlx->y - 1)
+		{
+			x = 0;
+			while (++x < mlx->x - 1)
+				if (mlx->map[y][x] == '1')
+					ft_draw_image(mlx, str[eye], x, y);
+		}
+		eye += 1;
+		if (eye == 2)
+			eye = 0;
+	}
+	++clock;
+}
+
+void	ft_torches_ani(t_mlx *mlx)
 {
 	char		*str[4];
 	static int	clock;
@@ -53,8 +80,8 @@ void	ft_torches(t_mlx *mlx, char *str)
 			ft_draw_image(mlx, "./textures/moves.png", x, mlx->y - 1);
 			continue ;
 		}
-		ft_draw_image(mlx, str, x, mlx->y - 1);
 		ft_draw_image(mlx, str, x, 0);
+		ft_draw_image(mlx, str, x, mlx->y - 1);
 	}
 	y = -1;
 	while (++y < mlx->y)

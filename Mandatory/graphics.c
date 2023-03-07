@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/04 16:56:58 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:19:44 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_put_sprite(t_mlx *mlx)
 			else if (mlx->map[y][x] == 'C')
 				ft_draw_image(mlx, "./textures/coin.png", x, y);
 			else if (mlx->map[y][x] == '1')
-				ft_draw_image(mlx, "./textures/eye.png", x, y);
+				ft_draw_image(mlx, "./textures/eye_left.png", x, y);
 		}
 	}
 }

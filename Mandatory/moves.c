@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:33:58 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 12:24:19 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:11:53 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,12 @@ void	ft_up(t_mlx *mlx, int *x, int *y)
 
 void	ft_esc(t_mlx *mlx, int x, int y)
 {
-	char	**win_msg;
-	int		i;
-
-	win_msg = NULL;
 	if ((x == mlx->e_cord->x && y == mlx->e_cord->y) && !mlx->coin)
 	{
-		i = 12;
-		win_msg = ft_parse("Mandatory/win_msg.c");
-		while (i < 20)
-			ft_printf("\e[0;32m%s\n", win_msg[i++]);
+		ft_printf("\n\e[0;33mYou Won!! I hope you enjoyed the game ❤️\n");
+		ft_printf("\e[0;31mNOW GIVE ME MY 125/100!!\n");
 	}
-	mlx_delete_image(mlx->win, mlx->img);
 	mlx_terminate(mlx->win);
 	ft_clear((void **)mlx->map);
-	ft_clear((void **)win_msg);
 	exit(EXIT_SUCCESS);
 }

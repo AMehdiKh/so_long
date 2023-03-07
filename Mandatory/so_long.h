@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/04 16:28:53 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:46:52 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SO_LONG_H
 
 # include <stdbool.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
@@ -24,14 +22,14 @@
 
 typedef struct s_cord
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 }	t_cord;
 
 typedef struct s_node
 {
-	t_cord					cord[1];
-	struct s_node			*next;
+	t_cord			cord[1];
+	struct s_node	*next;
 }	t_node;
 
 typedef struct s_queue
@@ -61,7 +59,7 @@ typedef struct s_mlx
 	int			max_height;
 }	t_mlx;
 
-void	ft_check_arg(t_mlx *mlx, int ac, char *av);
+void	ft_check_arg(t_mlx *mlx, char *av);
 
 char	**ft_parse(char *map_name);
 char	**ft_check_newline(char *line);

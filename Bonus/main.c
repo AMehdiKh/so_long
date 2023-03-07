@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 07:35:40 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/04 16:34:22 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/06 21:33:32 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	main(int ac, char **av)
 {
 	t_mlx	mlx[1];
 
-	ft_check_arg(ft_memset(mlx, 0, sizeof(t_mlx)), ac, av[1]);
+	if (ac != 2)
+		ft_err(NULL, "\e[0;31mError: More or less than one map entered");
+	ft_check_arg(ft_memset(mlx, 0, sizeof(t_mlx)), av[1]);
 	mlx->map = ft_parse(av[1]);
 	map_check(mlx);
 	ft_bfs(mlx);
@@ -24,12 +26,10 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-void	ft_check_arg(t_mlx *mlx, int ac, char *av)
+void	ft_check_arg(t_mlx *mlx, char *av)
 {
 	mlx_t	*win;
 
-	if (ac != 2)
-		ft_err(NULL, "\e[0;31mError: More or less than one map entered");
 	if (ft_strlen(av) <= 4)
 		ft_err(NULL, "\e[0;31mError: Map's name is incorrect");
 	if (ft_strncmp(".ber", av + (ft_strlen(av) - 4), 4))
@@ -60,28 +60,6 @@ char	**ft_parse(char *map_name)
 	return (ft_check_newline(ft_line(fd)));
 }
 
-char	**ft_check_newline(char *line)
-{
-	char	**map;
-	int		i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\n' && line[i + 1] == '\n')
-		{
-			free(line);
-			ft_err(NULL, "\e[0;31mError: The map has invalid characters");
-		}
-		++i;
-	}
-	map = ft_split(line, '\n');
-	free(line);
-	if (!map || !*map)
-		ft_err(map, "\e[0;31mError: map is empty");
-	return (map);
-}
-
 char	*ft_line(int fd)
 {
 	char	*buffer;
@@ -109,4 +87,28 @@ char	*ft_line(int fd)
 	close(fd);
 	free(buffer);
 	return (line);
+}
+
+char	**ft_check_newline(char *line)
+{
+	char	**map;
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\n' && line[i + 1] == '\n')
+		{
+			free(line);
+			ft_err(NULL, "\e[0;31mError: The map has invalid characters");
+		}
+		++i;
+	}
+	map = ft_split(line, '\n');
+	free(line);
+	if (!map)
+		ft_err(map, NULL);
+	if (!*map)
+		ft_err(map, "\e[0;31mError: The map is empty");
+	return (map);
 }

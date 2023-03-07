@@ -7,7 +7,7 @@
 # -----------------------------------------------------------------------------
 cmake_minimum_required (VERSION 3.18.0)
 project(mlx42 VERSION 2.3.0)
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+message(STATUS "MLX42 @ ${CMAKE_PROJECT_VERSION}")
 
 # Variables
 # -----------------------------------------------------------------------------
@@ -15,11 +15,16 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(TOOLS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tools)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-message(STATUS "MLX42 @ ${CMAKE_PROJECT_VERSION}")
+# Options
+set(DEBUG		OFF CACHE BOOL "Build MLX42 in debug mode, enabling assertions")
+set(GLFW_FETCH	ON CACHE BOOL "Clone and install GLFW")
+set(BUILD_TESTS	OFF CACHE BOOL "Build the tests to verify the integrity of the lib")
 
 # Compile Options
 # -----------------------------------------------------------------------------
@@ -43,10 +48,10 @@ if(UNIX)
 		-Wno-missing-field-initializers
 	)
 	if(DEBUG)
-		message("-- Building in DEBUG mode")
+		message(STATUS "Building in DEBUG mode")
 		add_compile_options(-g)
 	else()
-		message("-- Building in RELEASE mode")
+		message(STATUS "Building in RELEASE mode")
 		add_definitions(-D NDEBUG)
 		add_compile_options(-Ofast)
 	endif(DEBUG)
@@ -120,10 +125,32 @@ target_include_directories(mlx42 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 # -----------------------------------------------------------------------------
 
 find_package(glfw3)
-if(NOT glfw3_FOUND)
-	message("-- Please wait, fetching GLFW ...")
+find_package(OpenGL REQUIRED)
+
+target_link_libraries(mlx42 OpenGL::GL)
+if (NOT glfw3_FOUND AND GLFW_FETCH)
+	message(STATUS "Install GLFW to supress this message")
+	message(STATUS "Please wait, fetching GLFW ...")
 	include(${CMAKE_DIR}/LinkGLFW.cmake)
 	LinkGLFW(mlx42)
+elseif(NOT glfw3_FOUND AND NOT GLFW_FETCH)
+	message(FATAL_ERROR "Unable to build: GLFW can't be found nor fetched.")
 endif()
-find_package(OpenGL REQUIRED)
-target_link_libraries(mlx42 OpenGL::GL glfw)
+
+if (glfw3_FOUND)
+	target_link_libraries(mlx42 ${GLFW3_LIBRARY})
+endif()
+if(APPLE)
+	target_link_libraries(mlx42 "-framework Cocoa" "-framework IOKit")
+endif()
+
+# Testing
+# -----------------------------------------------------------------------------
+# Only build tests if we are the main project or explicitly told to this make sure 
+# tests are not built when mlx42 included as a subproject, use MLX42_BUILD_TESTS to overwrite this
+# use cmake -DBUILD_TESTS=ON/-DMLX42_BUILD_TESTS=ON to build tests
+
+if ((PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME AND BUILD_TESTS) OR MLX42_BUILD_TESTS)
+	add_subdirectory(tests)
+	enable_testing()
+endif()

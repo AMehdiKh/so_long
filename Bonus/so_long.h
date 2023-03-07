@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/04 16:28:38 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/07 10:33:37 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SO_LONG_H
 
 # include <stdbool.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
@@ -24,14 +22,14 @@
 
 typedef struct s_cord
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 }	t_cord;
 
 typedef struct s_node
 {
-	t_cord					cord[1];
-	struct s_node			*next;
+	t_cord			cord[1];
+	struct s_node	*next;
 }	t_node;
 
 typedef struct s_queue
@@ -70,7 +68,7 @@ typedef struct s_mlx
 	int			random;
 }	t_mlx;
 
-void	ft_check_arg(t_mlx *mlx, int ac, char *av);
+void	ft_check_arg(t_mlx *mlx, char *av);
 
 char	**ft_parse(char *map_name);
 char	**ft_check_newline(char *line);
@@ -105,8 +103,9 @@ void	ft_close_key(mlx_key_data_t keydata, void *param);
 void	ft_close(void *param);
 
 void	ft_loop(void *param);
-void	ft_animation(t_mlx *mlx);
+void	ft_torches_ani(t_mlx *mlx);
 void	ft_torches(t_mlx *mlx, char *str);
+void	ft_eye_ani(t_mlx *mlx);
 void	ft_moves_str(t_mlx *mlx);
 void	ft_coins_str(t_mlx *mlx);
 void	ft_enemy(t_mlx *mlx);
@@ -118,5 +117,6 @@ void	*ft_free_return(void *ptr1, void *ptr2);
 void	ft_err(char **ptr, char *str);
 void	ft_clear(void **ptr);
 char	*ft_strjoin_long(char *s1, char *s2);
+void	ft_eye(t_mlx *mlx);
 
 #endif

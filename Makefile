@@ -5,46 +5,59 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -MMD
 ###############################################################################################################
-M_DIR = Mandatory
+MANDIR = Mandatory
 
-SRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c outils.c
+OBJDIR = Mandatory/objs
 
-OBJS = ${SRCS:%.c=$(M_DIR)/%.o}
+SRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c utils.c
 
-M_DEP = ${OBJS:.o=.d}
+OBJS = ${SRCS:%.c=$(OBJDIR)/%.o}
+
+MANDEP = ${OBJS:.o=.d}
 ##############################################################################################################
-B_DIR = Bonus
+BONDIR = Bonus
 
-BSRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c loop_hook.c enemy.c outils.c
+BOBJDIR = Bonus/objs
 
-BOBJS = ${BSRCS:%.c=$(B_DIR)/%.o}
+BSRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c loop_hook.c enemy.c utils.c
 
-B_DEP = ${BOBJS:.o=.d}
+BOBJS = ${BSRCS:%.c=$(BOBJDIR)/%.o}
+
+BONDEP = ${BOBJS:.o=.d}
 ##############################################################################################################
 LIBFT = ./LibFT/libft.a
 
-LIBMLX = ./MLX42/build/libmlx42.a
+LIBMLX = /home/amehdikh/Desktop/so_short/MLX42/build/libmlx42.a
 ##############################################################################################################
 .PHONY: clean
 all: $(NAME)
-
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
+	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -o $(NAME)
+
+$(OBJDIR)/%.o: $(MANDIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(LIBFT) $(BOBJS)
-	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+
+$(BOBJDIR)/%.o: $(BONDIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
 	$(MAKE) -C LibFT
 
-sinclude $(M_DEP) $(B_DEP)
+sinclude $(MANDEP) $(BONDEP)
 
 clean:
 	$(MAKE) fclean -C LibFT
-	$(RM) $(OBJS) $(BOBJS) 
-	@$(RM) $(M_DEP) $(B_DEP)
+	$(RM) -r $(OBJDIR) $(BOBJDIR)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+#$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
+#./MLX42/build/libmlx42.a

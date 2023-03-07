@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:15:41 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/04 16:52:13 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/07 10:32:06 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	ft_put_sprite(t_mlx *mlx)
 				ft_draw_image(mlx, "./textures/d_closed.png", x, y);
 			else if (mlx->map[y][x] == 'C')
 				ft_draw_image(mlx, "./textures/coin.png", x, y);
-			else if (mlx->map[y][x] == '1')
-				ft_draw_image(mlx, "./textures/eye.png", x, y);
 		}
 	}
 }
@@ -97,10 +95,11 @@ void	ft_hooks(mlx_key_data_t keydata, void *param)
 
 void	ft_loop(void *param)
 {
-	t_mlx		*mlx;
+	t_mlx	*mlx;
 
 	mlx = param;
-	ft_animation(mlx);
+	ft_torches_ani(mlx);
+	ft_eye_ani(mlx);
 	if (mlx->moves != mlx->last_move)
 		ft_moves_str(mlx);
 	if (mlx->coin != mlx->last_coin)

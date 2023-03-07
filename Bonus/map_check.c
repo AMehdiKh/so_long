@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:58:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/02/15 10:56:54 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:40:57 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ void	map_check(t_mlx *mlx)
 	map = mlx->map;
 	while (map[mlx->y])
 	{
-		mlx->x = -1;
-		while (map[mlx->y][++mlx->x])
+		mlx->x = 0;
+		while (map[mlx->y][mlx->x])
 		{
 			if (!ft_strchr("10PCEX", map[mlx->y][mlx->x]))
 				ft_err(map, "\e[0;31mError: The map has invalid characters");
-			if (mlx->y == 0 || !(map[mlx->y + 1]) || mlx->x == 0
-				|| !(map[mlx->y][mlx->x + 1]))
+			if (mlx->y == 0 || !(map[mlx->y + 1])
+				|| mlx->x == 0 || !(map[mlx->y][mlx->x + 1]))
 				if (map[mlx->y][mlx->x] != '1')
 					ft_err(map, "\e[0;31mError: The map is not surrounded by 1");
 			ft_count_items(mlx, mlx->x, mlx->y);
+			++mlx->x;
 		}
 		if (map[++mlx->y])
 			if (mlx->x != (int)ft_strlen(map[mlx->y]))
@@ -74,10 +75,10 @@ bool	**ft_visited(t_mlx *mlx)
 	bool	**visited;
 	int		i;
 
-	i = 0;
 	visited = ft_calloc(mlx->y + 1, sizeof(bool *));
 	if (!visited)
 		ft_err(mlx->map, NULL);
+	i = 0;
 	while (i < mlx->y)
 	{
 		visited[i] = ft_calloc(mlx->x, sizeof(bool));
