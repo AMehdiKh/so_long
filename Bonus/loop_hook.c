@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 09:38:18 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/07 10:31:28 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/08 21:32:01 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,4 @@ void	ft_coins_str(t_mlx *mlx)
 			mlx->str_x - px, (mlx->y - 1) * 72 + 38);
 	mlx->last_coin = mlx->coin;
 	free(str);
-}
-
-void	ft_close(void *param)
-{
-	ft_esc(param, 0, 0);
 }

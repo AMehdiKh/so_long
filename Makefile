@@ -3,7 +3,7 @@ NAME = so_long
 ###############################################################################################################
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -g -MMD
 ###############################################################################################################
 MANDIR = Mandatory
 
@@ -39,7 +39,7 @@ $(OBJDIR)/%.o: $(MANDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(LIBFT) $(BOBJS)
-	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -fsanitize=address -static-libasan -fno-omit-frame-pointer -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -o $(NAME)
 
 $(BOBJDIR)/%.o: $(BONDIR)/%.c
 	@mkdir -p $(@D)
