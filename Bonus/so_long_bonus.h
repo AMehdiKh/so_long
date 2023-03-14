@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/07 10:33:37 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/15 00:56:33 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <stdbool.h>
 # include <fcntl.h>
@@ -106,6 +106,7 @@ void	ft_loop(void *param);
 void	ft_torches_ani(t_mlx *mlx);
 void	ft_torches(t_mlx *mlx, char *str);
 void	ft_eye_ani(t_mlx *mlx);
+void	ft_eye(t_mlx *mlx);
 void	ft_moves_str(t_mlx *mlx);
 void	ft_coins_str(t_mlx *mlx);
 void	ft_enemy(t_mlx *mlx);
@@ -117,6 +118,5 @@ void	*ft_free_return(void *ptr1, void *ptr2);
 void	ft_err(char **ptr, char *str);
 void	ft_clear(void **ptr);
 char	*ft_strjoin_long(char *s1, char *s2);
-void	ft_eye(t_mlx *mlx);
 
 #endif

@@ -1,15 +1,19 @@
 ###############################################################################################################
 NAME = so_long
+
+BNAME = so_long_bonus
 ###############################################################################################################
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -MMD
+CFLAGS = -Wall -Wextra -Werror -MMD
 ###############################################################################################################
 MANDIR = Mandatory
 
 OBJDIR = Mandatory/objs
 
-SRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c utils.c
+FILES = main map_check valid_path graphics sprites moves utils
+
+SRCS = $(addsuffix .c,$(FILES))
 
 OBJS = ${SRCS:%.c=$(OBJDIR)/%.o}
 
@@ -19,7 +23,9 @@ BONDIR = Bonus
 
 BOBJDIR = Bonus/objs
 
-BSRCS = main.c map_check.c valid_path.c graphics.c sprites.c moves.c loop_hook.c enemy.c utils.c
+BFILES = main map_check valid_path graphics sprites moves utils loop_hook enemy
+
+BSRCS = $(addsuffix _bonus.c,$(BFILES))
 
 BOBJS = ${BSRCS:%.c=$(BOBJDIR)/%.o}
 
@@ -30,7 +36,7 @@ LIBFT = ./LibFT/libft.a
 LIBMLX = /home/amehdikh/Desktop/so_short/MLX42/build/libmlx42.a
 ##############################################################################################################
 .PHONY: clean
-all: $(NAME)
+man: $(NAME)
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -o $(NAME)
 
@@ -38,12 +44,15 @@ $(OBJDIR)/%.o: $(MANDIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(LIBFT) $(BOBJS)
+bonus: $(BNAME)
+$(BNAME): $(LIBFT) $(BOBJS)
 	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -o $(NAME)
 
 $(BOBJDIR)/%.o: $(BONDIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+all: man bonus
 
 $(LIBFT):
 	$(MAKE) -C LibFT
