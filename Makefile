@@ -67,6 +67,3 @@ fclean: clean
 	$(RM) $(NAME) $(BNAME)
 
 re: fclean all
-
-#$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
-#./MLX42/build/libmlx42.a

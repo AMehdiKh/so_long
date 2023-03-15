@@ -6,38 +6,11 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 09:38:18 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/15 00:43:14 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/15 06:19:12 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
-
-void	ft_eye_ani(t_mlx *mlx)
-{
-	char		*str[2];
-	static int	clock;
-	static int	eye;
-	int			x;
-	int			y;
-
-	str[0] = "./textures/eye_left.png";
-	str[1] = "./textures/eye_right.png";
-	if (clock % 60 == 0)
-	{
-		y = 0;
-		while (++y < mlx->y - 1)
-		{
-			x = 0;
-			while (++x < mlx->x - 1)
-				if (mlx->map[y][x] == '1')
-					ft_draw_image(mlx, str[eye], x, y);
-		}
-		eye += 1;
-		if (eye == 2)
-			eye = 0;
-	}
-	++clock;
-}
 
 void	ft_torches_ani(t_mlx *mlx)
 {
@@ -91,6 +64,33 @@ void	ft_torches(t_mlx *mlx, char *str)
 	}
 }
 
+void	ft_eye_ani(t_mlx *mlx)
+{
+	char		*str[2];
+	static int	clock;
+	static int	eye;
+	int			x;
+	int			y;
+
+	str[0] = "./textures/eye_left.png";
+	str[1] = "./textures/eye_right.png";
+	if (clock % 60 == 0)
+	{
+		y = 0;
+		while (++y < mlx->y - 1)
+		{
+			x = 0;
+			while (++x < mlx->x - 1)
+				if (mlx->map[y][x] == '1')
+					ft_draw_image(mlx, str[eye], x, y);
+		}
+		eye += 1;
+		if (eye == 2)
+			eye = 0;
+	}
+	++clock;
+}
+
 void	ft_moves_str(t_mlx *mlx)
 {
 	char	*str;
@@ -116,6 +116,7 @@ void	ft_moves_str(t_mlx *mlx)
 void	ft_coins_str(t_mlx *mlx)
 {
 	char	*str;
+	int		str_y;
 	int		px;
 
 	px = 0;
@@ -128,8 +129,8 @@ void	ft_coins_str(t_mlx *mlx)
 	str = ft_itoa(mlx->coin);
 	if (!str)
 		ft_close(mlx);
-	mlx->coins_img = mlx_put_string(mlx->win, str,
-			mlx->str_x - px, (mlx->y - 1) * 72 + 38);
+	str_y = ((mlx->y - 1) * 72) + 38;
+	mlx->coins_img = mlx_put_string(mlx->win, str, mlx->str_x - px, str_y);
 	mlx->last_coin = mlx->coin;
 	free(str);
 }

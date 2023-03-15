@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 02:31:12 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/03/15 00:56:33 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/03/15 06:13:18 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	ft_loop(void *param);
 void	ft_torches_ani(t_mlx *mlx);
 void	ft_torches(t_mlx *mlx, char *str);
 void	ft_eye_ani(t_mlx *mlx);
-void	ft_eye(t_mlx *mlx);
 void	ft_moves_str(t_mlx *mlx);
 void	ft_coins_str(t_mlx *mlx);
 void	ft_enemy(t_mlx *mlx);
