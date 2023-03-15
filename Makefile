@@ -33,12 +33,12 @@ BONDEP = ${BOBJS:.o=.d}
 ##############################################################################################################
 LIBFT = ./LibFT/libft.a
 
-LIBMLX = /home/amehdikh/Desktop/so_short/MLX42/build/libmlx42.a
+LIBMLX = ./MLX42/build/libmlx42.a
 ##############################################################################################################
 .PHONY: clean
 man: $(NAME)
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
 
 $(OBJDIR)/%.o: $(MANDIR)/%.c
 	@mkdir -p $(@D)
@@ -46,7 +46,7 @@ $(OBJDIR)/%.o: $(MANDIR)/%.c
 
 bonus: $(BNAME)
 $(BNAME): $(LIBFT) $(BOBJS)
-	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(BOBJS) $(LIBFT) $(LIBMLX) -Iinclude -lglfw -L"/Users/ael-khel/goinfre/homebrew/opt/glfw/lib" -o $@
 
 $(BOBJDIR)/%.o: $(BONDIR)/%.c
 	@mkdir -p $(@D)
@@ -64,7 +64,7 @@ clean:
 	$(RM) -r $(OBJDIR) $(BOBJDIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BNAME)
 
 re: fclean all
 

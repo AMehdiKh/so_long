@@ -55,11 +55,7 @@ In case your system doesn't have [glfw](https://github.com/glfw/glfw) installed 
 You can then run `sudo make install` in the `_deps` directory of glfw. If you're using a 42 Computer (MacOS, Linux), ask your favourite sysadmin to install it.
 Same goes for CMake or any other dependencies you might need for your system.
 
-However if you can't do either CMake will still be able to fetch GLFW and build it. You can then statically link it from the `_deps` folder.
-
-> **Note**: For Codam, GLFW is already installed on the Macs.
-
-> **Note**: During the linking stage, the flag to link GLFW can either be: -lglfw3 or -lglfw depending on your system.
+> **Note**: For Codam, GLFW is already installed on the IMacs.
 
 2. Compile your program with the library:
 	- For: [MacOS](#for-macos)
@@ -68,16 +64,7 @@ However if you can't do either CMake will still be able to fetch GLFW and build 
 
 3. Profit!
 
-### Unit tests
-MLX42 comes with some unit tests to ensure the integrity of the library, to build them run the following command:
-```sh
-cmake -DBUILD_TESTS=ON -B build && cmake --build build --parallel
-```
-
-Then simply run them with:
-```sh
-ctest --output-on-failure --test-dir build
-```
+> **Note**: You can find an example makefile in the documentation [here](https://github.com/codam-coding-college/MLX42/blob/master/docs/Basics.md).
 
 ----
 
@@ -92,26 +79,9 @@ ctest --output-on-failure --test-dir build
 
 The output library file is called `libmlx42.a` and is located in the `build` folder that you specified.
 
-### Available Options
-
-You can pass build [options](./docs/index.md#available-options) to cmake, e.g: `cmake -DDEBUG=1 -DGLFW_FETCH=0...`. These will for instance let you build it in DEBUG mode or alter any sort of behaviour at build-time.
-
-You can find an example makefile in the documentation [here](https://github.com/codam-coding-college/MLX42/blob/master/docs/Basics.md).
-
 ----
 
 ## For MacOS:
-
-### Installing the dependencies
-
-If your system has neither GLFW nor CMake its highly recommended you use brew to install those missing dependencies.
-
-For 42 Campuses you can use: [42Homebrew](https://github.com/kube/42homebrew)
-```bash
-# This will also install CMake.
-# Be aware that this may take a while so be patient.
-➜  ~ brew install glfw
-```
 
 For MacOS you need to use the following flags to compile your program with the library
 in order to link the program with the correct frameworks:
@@ -122,16 +92,17 @@ in order to link the program with the correct frameworks:
 Normally if you simply installed / built `glfw` from source or already have it installed
 the compilation should be:
 ```bash
-➜  ~ gcc main.c ... libmlx42.a -Iinclude -lglfw
+➜  ~ gcc main.c ... libmlx42.a -Iinclude -lglfw3
 ```
 
 #### Via [Homebrew](https://brew.sh/) / [42Homebrew](https://github.com/kube/42homebrew)
 ```bash
 # Homebrew
-➜  ~ gcc main.c ... libmlx42.a -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
+# NOTE: Last `-L` might not be necessary.
+➜  ~ gcc main.c ... libmlx42.a -Iinclude -lglfw3 -L/opt/homebrew/Cellar/glfw/3.3.8/lib/
 
 # 42Homebrew
-➜  ~ gcc main.c ... libmlx42.a -Iinclude -lglfw -L"/Users/$USER/.brew/opt/glfw/lib/"
+➜  ~ gcc main.c ... libmlx42.a -Iinclude -lglfw3 -L"/Users/$USER/.brew/opt/glfw/lib/"
 ```
 
 #### MacOS Security:
@@ -166,6 +137,7 @@ OR (if you use sway/wlroots compositor or other wayland compositor)
 2. [Download and build MLX42](#download-and-build---mlx42) 
 
 3. Compile your program with the library:
+> **Note**: For glfw the flag can either be: -lglfw3 or -lglfw
 
 ```bash
 ➜  ~ gcc main.c ... libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
@@ -205,7 +177,7 @@ and they might not even show up in the list until the first time you start the a
 
 ----
 
-## For Windows Native:
+## For Windows:
 
 > **Warning**: Be aware that Visual Studio (2022) is required for this. Developing on Windows can be somewhat frustrating.
 
@@ -225,7 +197,7 @@ Of course it's up to you to make sure that the code you write is portable. Thing
 
 ## Example
 
-![MLX42](docs/assets/demo.gif)
+![MLX42](https://user-images.githubusercontent.com/63303990/150696516-95b3cd7b-2740-43c5-bdcd-112193d59e14.gif)
 
 ```c
 // -----------------------------------------------------------------------------
@@ -235,83 +207,43 @@ Of course it's up to you to make sure that the code you write is portable. Thing
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <MLX42/MLX42.h>
-
+#include <memory.h>
+#include "MLX42/MLX42.h"
 #define WIDTH 512
 #define HEIGHT 512
 
-static mlx_image_t* image;
+static mlx_image_t* img;
 
-// -----------------------------------------------------------------------------
-
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
-}
-
-void ft_randomize(void* param)
-{
-	for (int32_t i = 0; i < image->width; ++i)
-	{
-		for (int32_t y = 0; y < image->height; ++y)
-		{
-			uint32_t color = ft_pixel(
-				rand() % 0xFF, // R
-				rand() % 0xFF, // G
-				rand() % 0xFF, // B
-				rand() % 0xFF  // A
-			);
-			mlx_put_pixel(image, i, y, color);
-		}
-	}
-}
-
-void ft_hook(void* param)
+void hook(void* param)
 {
 	mlx_t* mlx = param;
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y -= 5;
+		img->instances[0].y -= 5;
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		image->instances[0].y += 5;
+		img->instances[0].y += 5;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x -= 5;
+		img->instances[0].x -= 5;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		image->instances[0].x += 5;
+		img->instances[0].x += 5;
 }
 
-// -----------------------------------------------------------------------------
-
-int32_t main(int32_t argc, const char* argv[])
+int32_t	main(void)
 {
 	mlx_t* mlx;
 
-	// Gotta error check this stuff
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
-	}
-	if (!(image = mlx_new_image(mlx, 128, 128)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	
-	mlx_loop_hook(mlx, ft_randomize, mlx);
-	mlx_loop_hook(mlx, ft_hook, mlx);
 
+	img = mlx_new_image(mlx, 128, 128);
+	memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	mlx_image_to_window(mlx, img, 0, 0);
+
+	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
+
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }
